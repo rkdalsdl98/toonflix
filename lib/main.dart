@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/screens/Homescreen.dart';
+import 'package:toonflix/screens/LoginScreen.dart';
 
 void main() {
   runApp(const ToonFlix());
@@ -11,7 +11,7 @@ class ToonFlix extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const HomeScreen(),
+      home: const LoginScreen(),
       title: 'ToonFlix',
       theme: ThemeData.from(
         colorScheme: const ColorScheme.dark(

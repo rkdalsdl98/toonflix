@@ -2,22 +2,22 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class HomeDescription extends StatefulWidget {
+class LoginDescription extends StatefulWidget {
   final String description;
   final int showTextDuration;
   bool showText = false;
 
-  HomeDescription({
+  LoginDescription({
     super.key,
     required this.description,
     this.showTextDuration = 500,
   });
 
   @override
-  State<HomeDescription> createState() => _HomeDescriptionState();
+  State<LoginDescription> createState() => _LoginDescriptionState();
 }
 
-class _HomeDescriptionState extends State<HomeDescription> {
+class _LoginDescriptionState extends State<LoginDescription> {
   @override
   void initState() {
     super.initState();
