@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-Future<void> onBackPressed(BuildContext context) async {
+const double preferredAppBarHeight = 70;
+
+Future<void> onBackPressedByHome(BuildContext context) async {
   await showDialog(
     context: context,
     builder: (context) => AlertDialog(

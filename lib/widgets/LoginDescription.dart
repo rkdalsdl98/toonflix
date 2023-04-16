@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 class LoginDescription extends StatefulWidget {
@@ -38,8 +39,11 @@ class _LoginDescriptionState extends State<LoginDescription> {
         duration: const Duration(
           milliseconds: 500,
         ),
-        child: Text(
+        child: AutoSizeText(
           widget.description,
+          maxLines: 3,
+          minFontSize: 10,
+          maxFontSize: 14,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
