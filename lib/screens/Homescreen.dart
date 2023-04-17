@@ -6,7 +6,7 @@ import '../widgets/BestWebtoon.dart';
 import '../widgets/Category.dart';
 import '../widgets/GlobalAppBar.dart';
 import '../widgets/GlobalMenuBar.dart';
-import '../widgets/Webtoon.dart';
+import '../widgets/WebtoonList.dart';
 
 class HomeScreen extends StatelessWidget {
   final String identifier;
@@ -26,21 +26,9 @@ class HomeScreen extends StatelessWidget {
               const Category(),
               SizedBox(
                 height: 520 * scaleHeight(context),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: ListView(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Webtoon(
-                              identifier: 'naver',
-                              identifierColor: const Color(0xFF00DC64),
-                              title: '화산귀환'),
-                        ],
-                      ),
-                    ],
-                  ),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: WebtoonList(),
                 ),
               ),
             ],
