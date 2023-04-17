@@ -15,10 +15,10 @@
 # Stack
 
 FrontEnd
-<img src='https://cdn.jumpit.co.kr/images/stacks/flutter.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/dart.png'>
+<img src='https://cdn.jumpit.co.kr/images/stacks/flutter.png' width="200" height="400"> <img src='https://cdn.jumpit.co.kr/images/stacks/dart.png' width="200" height="400">
 
 BackEnd
-<img src='https://cdn.jumpit.co.kr/images/stacks/typescript.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/TypeORM.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/nestjs.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/node.js.png'>
+<img src='https://cdn.jumpit.co.kr/images/stacks/typescript.png' width="200" height="400"> <img src='https://cdn.jumpit.co.kr/images/stacks/TypeORM.png' width="200" height="400"> <img src='https://cdn.jumpit.co.kr/images/stacks/nestjs.png' width="200" height="400"> <img src='https://cdn.jumpit.co.kr/images/stacks/node.js.png' width="200" height="400">
 
 Database
-<img src='https://cdn.jumpit.co.kr/images/stacks/mysql.png'>
+<img src='https://cdn.jumpit.co.kr/images/stacks/mysql.png' width="200" height="400">
