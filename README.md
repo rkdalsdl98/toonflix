@@ -11,3 +11,14 @@
 # DBDiagramIO
 
 <img src='https://user-images.githubusercontent.com/77562358/232296961-c96297c6-7b66-4509-9891-b188f58c05dd.png'>
+
+# Stack
+
+FrontEnd
+<img src='https://cdn.jumpit.co.kr/images/stacks/flutter.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/dart.png'>
+
+BackEnd
+<img src='https://cdn.jumpit.co.kr/images/stacks/typescript.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/TypeORM.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/nestjs.png'> <img src='https://cdn.jumpit.co.kr/images/stacks/node.js.png'>
+
+Database
+<img src='https://cdn.jumpit.co.kr/images/stacks/mysql.png'>
