@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../globalfuncs/Desigh.dart';
+import '../../globalfuncs/Desigh.dart';
 
 class BestWebtoon extends StatelessWidget {
   const BestWebtoon({

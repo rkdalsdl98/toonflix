@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/widgets/LoginButton.dart';
 import '../globalfuncs/Desigh.dart';
 import '../widgets/GlobalAppBar.dart';
+import '../widgets/LoginButton.dart';
 import '../widgets/LoginDescription.dart';
 
 class LoginScreen extends StatelessWidget {

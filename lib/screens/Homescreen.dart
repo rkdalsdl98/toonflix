@@ -3,8 +3,9 @@ import 'package:toonflix/globalfuncs/System.dart';
 
 import '../globalfuncs/Desigh.dart';
 import '../widgets/BestWebtoon.dart';
+import '../widgets/Category.dart';
 import '../widgets/GlobalAppBar.dart';
-import '../widgets/IdentifierButton.dart';
+import '../widgets/GlobalMenuBar.dart';
 import '../widgets/Webtoon.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,30 +23,7 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               const BestWebtoon(),
-              Container(
-                decoration: const BoxDecoration(
-                    border: Border(
-                  bottom: BorderSide(),
-                )),
-                height: 80 * scaleHeight(context),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    IdentifierButton(
-                      identifier: 'naver',
-                    ),
-                    IdentifierButton(
-                      identifier: 'kakao',
-                    ),
-                    IdentifierButton(
-                      identifier: 'lezhin',
-                    ),
-                    IdentifierButton(
-                      identifier: 'all',
-                    ),
-                  ],
-                ),
-              ),
+              const Category(),
               SizedBox(
                 height: 520 * scaleHeight(context),
                 child: Padding(
@@ -77,6 +55,7 @@ class HomeScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(64),
         child: GlobalAppBar(),
       ),
+      bottomNavigationBar: const GlobalMenuBar(),
     );
   }
 }

@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:toonflix/screens/homescreen.dart';
-import '../globalfuncs/Desigh.dart';
 import 'dart:async';
+
+import '../../globalfuncs/Desigh.dart';
 
 class LoginButton extends StatefulWidget {
   final Color bgColor;

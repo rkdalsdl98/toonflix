@@ -11,7 +11,9 @@ double scaleWidth(BuildContext context) {
 }
 
 double scaleHeight(BuildContext context) {
-  final diff = (MediaQuery.of(context).size.height - preferredAppBarHeight) /
+  final diff = (MediaQuery.of(context).size.height -
+          preferredAppBarHeight -
+          preferredBottomMenubarHeight) /
       standardDeviceHeight;
   return diff;
 }
