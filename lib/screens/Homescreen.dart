@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/System.dart';
+import 'package:toonflix/widgets/WebtoonList.dart';
 
 import '../globalfuncs/Desigh.dart';
 import '../widgets/BestWebtoon.dart';
 import '../widgets/Category.dart';
 import '../widgets/GlobalAppBar.dart';
 import '../widgets/GlobalMenuBar.dart';
-import '../widgets/WebtoonList.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   final String identifier;
   const HomeScreen({
     super.key,
     required this.identifier,
   });
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
