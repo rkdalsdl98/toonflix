@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'models/WebtoonModel.dart';
 
 class ApiService {
-  static const String BASEURL = 'http://175.210.132.15:3000/webtoon';
+  static const String BASEURL = 'http://localhost:3000/webtoon';
 
   static Future<List<List<WebtoonModel>>> getTodaysToons() async {
     final url = Uri.parse('$BASEURL/list');
