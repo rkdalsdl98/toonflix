@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/widgets/VerticalAnimateButton.dart';
 
-import 'UserProfile.dart';
+import '../sidebar/UserProfile.dart';
+import 'VerticalAnimateButton.dart';
 
 class GlobalDrawer extends StatefulWidget {
   bool showMenus;

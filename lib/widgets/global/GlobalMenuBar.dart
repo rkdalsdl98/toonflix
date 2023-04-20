@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
 
-import '../globalfuncs/System.dart';
+import '../../globalfuncs/System.dart';
 
 class GlobalMenuBar extends StatefulWidget {
   int selectedIconIdx;

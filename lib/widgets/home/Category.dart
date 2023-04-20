@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../globalfuncs/Desigh.dart';
+import '../../globalfuncs/Desigh.dart';
 import 'IdentifierButton.dart';
 
 class Category extends StatelessWidget {

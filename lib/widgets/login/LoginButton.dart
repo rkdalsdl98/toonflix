@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:toonflix/screens/homescreen.dart';
 import 'dart:async';

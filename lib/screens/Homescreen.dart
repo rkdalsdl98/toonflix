@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/System.dart';
-import 'package:toonflix/widgets/WebtoonList.dart';
 
 import '../globalfuncs/Desigh.dart';
-import '../widgets/BestWebtoon.dart';
-import '../widgets/Category.dart';
-import '../widgets/GlobalAppBar.dart';
-import '../widgets/GlobalDrawer.dart';
-import '../widgets/GlobalMenuBar.dart';
+import '../widgets/global/GlobalAppBar.dart';
+import '../widgets/global/GlobalDrawer.dart';
+import '../widgets/global/GlobalMenuBar.dart';
+import '../widgets/home/Category.dart';
+import '../widgets/webtoon/BestWebtoon.dart';
+import '../widgets/webtoon/WebtoonList.dart';
 
 class HomeScreen extends StatefulWidget {
   final String identifier;
