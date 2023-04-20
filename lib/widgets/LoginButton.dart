@@ -1,6 +1,9 @@
+
 import 'package:flutter/material.dart';
-import '../globalfuncs/Desigh.dart';
+import 'package:toonflix/screens/homescreen.dart';
 import 'dart:async';
+
+import '../../globalfuncs/Desigh.dart';
 
 class LoginButton extends StatefulWidget {
   final Color bgColor;
@@ -28,7 +31,43 @@ class LoginButton extends StatefulWidget {
 }
 
 class _LoginButtonState extends State<LoginButton> {
-  onPressButton() {}
+  onPressButton() {
+    if (widget.showButton) {
+      WidgetBuilder builder = guest(context);
+
+      switch (widget.identifier) {
+        case 'toonflix':
+          builder = login(context);
+          break;
+        case 'register':
+          builder = register(context);
+          break;
+        default:
+      }
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: builder,
+        ),
+      );
+    }
+  }
+
+  WidgetBuilder login(BuildContext context) {
+    return (context) => HomeScreen(
+          identifier: widget.identifier,
+        );
+  }
+
+  WidgetBuilder guest(BuildContext context) {
+    return (context) => HomeScreen(
+          identifier: widget.identifier,
+        );
+  }
+
+  WidgetBuilder register(BuildContext context) {
+    return (context) => const Text('Do Not Used.');
+  }
 
   @override
   void initState() {

@@ -1,23 +1,25 @@
+
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-class HomeDescription extends StatefulWidget {
+class LoginDescription extends StatefulWidget {
   final String description;
   final int showTextDuration;
   bool showText = false;
 
-  HomeDescription({
+  LoginDescription({
     super.key,
     required this.description,
     this.showTextDuration = 500,
   });
 
   @override
-  State<HomeDescription> createState() => _HomeDescriptionState();
+  State<LoginDescription> createState() => _LoginDescriptionState();
 }
 
-class _HomeDescriptionState extends State<HomeDescription> {
+class _LoginDescriptionState extends State<LoginDescription> {
   @override
   void initState() {
     super.initState();
@@ -38,8 +40,11 @@ class _HomeDescriptionState extends State<HomeDescription> {
         duration: const Duration(
           milliseconds: 500,
         ),
-        child: Text(
+        child: AutoSizeText(
           widget.description,
+          maxLines: 3,
+          minFontSize: 10,
+          maxFontSize: 14,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
