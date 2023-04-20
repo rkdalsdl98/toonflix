@@ -6,10 +6,12 @@ import '../globalfuncs/Desigh.dart';
 import '../widgets/BestWebtoon.dart';
 import '../widgets/Category.dart';
 import '../widgets/GlobalAppBar.dart';
+import '../widgets/GlobalDrawer.dart';
 import '../widgets/GlobalMenuBar.dart';
 
 class HomeScreen extends StatefulWidget {
   final String identifier;
+
   const HomeScreen({
     super.key,
     required this.identifier,
@@ -46,9 +48,15 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(64),
-        child: GlobalAppBar(),
+        child: GlobalAppBar(
+          centerTitle: false,
+        ),
       ),
-      bottomNavigationBar: const GlobalMenuBar(),
+      drawer: Drawer(
+        child: GlobalDrawer(),
+      ),
+      drawerEnableOpenDragGesture: false,
+      bottomNavigationBar: GlobalMenuBar(),
     );
   }
 }

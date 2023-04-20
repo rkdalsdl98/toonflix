@@ -96,7 +96,9 @@ class LoginScreen extends StatelessWidget {
       ),
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(64),
-        child: GlobalAppBar(),
+        child: GlobalAppBar(
+          centerTitle: false,
+        ),
       ),
     );
   }

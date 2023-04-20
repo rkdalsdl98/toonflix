@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const double preferredAppBarHeight = 70;
+const double preferredAppBarHeight = 80;
 const double preferredBottomMenubarHeight = 80;
 
 Future<void> onBackPressedByHome(BuildContext context) async {
