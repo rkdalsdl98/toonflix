@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
@@ -8,14 +7,14 @@ class Webtoon extends StatelessWidget {
   final String identifier;
   final Color identifierColor;
   final String title;
-  String? thumb;
+  final String thumb;
 
-  Webtoon({
+  const Webtoon({
     super.key,
     required this.identifier,
     required this.identifierColor,
     required this.title,
-    this.thumb,
+    required this.thumb,
   });
 
   @override
@@ -30,27 +29,31 @@ class Webtoon extends StatelessWidget {
         decoration: const BoxDecoration(),
         child: Column(
           children: [
-            const Image(
-              image: AssetImage('assets/icons/화산귀환.jpg'),
+            Image.network(
+              thumb,
+              headers: const {
+                "User-Agent":
+                    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
+              },
             ),
             AutoSizeText(
               identifier.toUpperCase(),
-              minFontSize: 8,
+              minFontSize: 10,
               maxFontSize: 12,
               maxLines: 1,
               style: TextStyle(
-                fontSize: 8,
+                fontSize: 10,
                 fontWeight: FontWeight.w600,
                 color: identifierColor,
               ),
             ),
             AutoSizeText(
               title,
-              maxLines: 1,
-              minFontSize: 12,
-              maxFontSize: 14,
+              maxLines: 2,
+              minFontSize: 7,
+              maxFontSize: 10,
               style: const TextStyle(
-                fontSize: 12,
+                fontSize: 7,
                 fontWeight: FontWeight.w600,
               ),
             ),

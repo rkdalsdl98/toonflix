@@ -4,8 +4,11 @@ import 'package:toonflix/globalfuncs/Desigh.dart';
 import '../globalfuncs/System.dart';
 
 class GlobalMenuBar extends StatefulWidget {
-  const GlobalMenuBar({
+  int selectedIconIdx;
+
+  GlobalMenuBar({
     super.key,
+    this.selectedIconIdx = 0,
   });
 
   @override
@@ -13,14 +16,15 @@ class GlobalMenuBar extends StatefulWidget {
 }
 
 class _GlobalMenuBarState extends State<GlobalMenuBar> {
-  int selectedIconIdx = 0;
   double toonflixIconTranslateY = 0;
 
-  onTapIcon(int idx) {
+  onTapIcon(int idx, BuildContext context) {
     setState(() {
-      selectedIconIdx = idx;
+      widget.selectedIconIdx = idx;
       if (idx == 1) {
         toonflixIconTranslateY = -10;
+      } else if (idx == 2) {
+        Scaffold.of(context).openDrawer();
       } else {
         toonflixIconTranslateY = 0;
       }
@@ -32,8 +36,12 @@ class _GlobalMenuBarState extends State<GlobalMenuBar> {
     return SizedBox(
       height: preferredBottomMenubarHeight,
       child: BottomNavigationBar(
-        onTap: onTapIcon,
-        currentIndex: selectedIconIdx,
+        selectedItemColor: Colors.white.withOpacity(.7),
+        selectedFontSize: 12,
+        onTap: (int idx) {
+          onTapIcon(idx, context);
+        },
+        currentIndex: widget.selectedIconIdx,
         items: [
           BottomNavigationBarItem(
             icon: Icon(
