@@ -1,5 +1,5 @@
 class WebtoonModel {
-  final String title, thumb, webtoonid, company;
+  final String title, thumb, webtoonid, company, genre, age, about;
   final int likecount, price, weekly;
 
   WebtoonModel.fromJson(Map<String, dynamic> json)
@@ -9,5 +9,8 @@ class WebtoonModel {
         webtoonid = json['webtoon_id'],
         company = json['company'],
         price = json['price'],
-        weekly = json['weekly'];
+        weekly = json['weekly'],
+        genre = json['genre'],
+        age = json['age'],
+        about = json['about'];
 }

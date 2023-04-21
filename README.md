@@ -1,28 +1,9 @@
-# ToonFlix
+# 진행중
+***
+유저 사이드 메뉴바 (50%)  
 
-매일 여러 플랫폼들의 웹툰을 소개받고 추천 하자!
-
-# Figma
-
-피그마 주소 -> https://www.figma.com/file/AcBSZDE8CXW79wlb31gw1u/ToonFlix?node-id=0-1&t=KP1fIXHmTEhpUES9-0
-
-플러터 미숙달로 인해 구상했던 UI와는 상이할 수 있습니다...
-
-# DBDiagramIO
-
-<img src='https://user-images.githubusercontent.com/77562358/232296961-c96297c6-7b66-4509-9891-b188f58c05dd.png'>
-
-# Stack
-
-```bash
-# 이미지 출처 - 점핏 https://www.jumpit.co.kr/
-```
-
-FrontEnd
-<img src='https://cdn.jumpit.co.kr/images/stacks/flutter.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/dart.png' width="50" height="50">
-
-BackEnd
-<img src='https://cdn.jumpit.co.kr/images/stacks/typescript.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/TypeORM.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/nestjs.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/node.js.png' width="50" height="50">
-
-Database
-<img src='https://cdn.jumpit.co.kr/images/stacks/mysql.png' width="50" height="50">
+# 완료
+***
+로그인 화면 구성  
+홈 화면 구성  
+서버에 데이터 요청후 데이터 인스턴스화(위젯화)  
