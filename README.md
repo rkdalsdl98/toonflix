@@ -11,7 +11,7 @@
 # DBDiagramIO
 
 2023/04/21 날짜로 업데이트 되었습니다.  
-<img src='https://user-images.githubusercontent.com/77562358/232296961-c96297c6-7b66-4509-9891-b188f58c05dd.png'>
+<img src='https://velog.velcdn.com/images/rkdalsdl98/post/c984f8b1-5059-4006-ad56-1444131c1921/image.png'>
 
 # Stack
 
