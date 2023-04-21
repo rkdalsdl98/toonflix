@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
-import 'package:toonflix/service/ApiService.dart';
 import 'package:toonflix/service/models/WebtoonModel.dart';
 
+import '../../service/ApiService.dart';
 import 'WebtoonColum.dart';
 
 class WebtoonList extends StatefulWidget {
