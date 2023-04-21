@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/System.dart';
+import 'package:toonflix/service/ApiService.dart';
 
 import '../globalfuncs/Desigh.dart';
 import '../widgets/global/GlobalAppBar.dart';
@@ -22,6 +23,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    ApiService.getTodaysToons();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
