@@ -3,10 +3,12 @@ import 'package:toonflix/globalfuncs/System.dart';
 
 class GlobalAppBar extends StatelessWidget {
   final bool centerTitle;
+  String? titleText;
 
-  const GlobalAppBar({
+  GlobalAppBar({
     super.key,
     required this.centerTitle,
+    this.titleText,
   });
 
   @override
@@ -16,11 +18,13 @@ class GlobalAppBar extends StatelessWidget {
       child: AppBar(
         centerTitle: centerTitle,
         automaticallyImplyLeading: false,
-        title: Image.asset(
-          'assets/icons/toonflixlogo_translucent.png',
-          width: 48,
-          height: 48,
-        ),
+        title: titleText != null
+            ? Text(titleText!)
+            : Image.asset(
+                'assets/icons/toonflixlogo_translucent.png',
+                width: 48,
+                height: 48,
+              ),
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
     );

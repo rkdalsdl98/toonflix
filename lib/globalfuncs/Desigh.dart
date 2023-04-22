@@ -10,6 +10,12 @@ double scaleWidth(BuildContext context) {
   return diff;
 }
 
+double scaleHeightExceptMeunbar(BuildContext context) {
+  final diff = (MediaQuery.of(context).size.height - preferredAppBarHeight) /
+      standardDeviceHeight;
+  return diff;
+}
+
 double scaleHeight(BuildContext context) {
   final diff = (MediaQuery.of(context).size.height -
           preferredAppBarHeight -

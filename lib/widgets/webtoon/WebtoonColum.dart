@@ -3,12 +3,6 @@ import 'package:toonflix/service/models/WebtoonModel.dart';
 
 import 'Webtoon.dart';
 
-final Map<String, Color> identifierColor = {
-  'naver': Colors.green,
-  'kakao': Colors.yellow,
-  'lezhin': Colors.red,
-};
-
 class WebtoonColum extends StatefulWidget {
   final List<WebtoonModel> webtoonColum;
 
@@ -31,10 +25,7 @@ class _WebtoonColumState extends State<WebtoonColum> {
           children: [
             for (var webtoon in widget.webtoonColum)
               Webtoon(
-                identifier: webtoon.company,
-                identifierColor: identifierColor[webtoon.company]!,
-                title: webtoon.title,
-                thumb: webtoon.thumb,
+                webtoon: webtoon,
               )
           ],
         ),
