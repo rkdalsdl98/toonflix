@@ -3,7 +3,7 @@ import 'package:toonflix/globalfuncs/Desigh.dart';
 import 'package:toonflix/widgets/webtoon/Genre.dart';
 
 import '../widgets/global/GlobalAppBar.dart';
-import '../widgets/webtoon/WebtoonPageButton.dart';
+import '../widgets/webtoon/WebtoonPageFrame.dart';
 
 class WebtoonDetail extends StatelessWidget {
   final int likeCount;
@@ -162,27 +162,8 @@ class WebtoonDetail extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 125 * scaleHeightExceptMeunbar(context),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      WebtoonPageButton(
-                        buttonColor: const Color(0xFFE21221),
-                        episodeTitle: '< 최신화 부터 보기',
-                        description: '최신화 부터 볼래요!',
-                      ),
-                      WebtoonPageButton(
-                        buttonColor: Colors.white,
-                        episodeTitle: '처음부터 정주행 하기 >',
-                        description: '처음부터 정주행 할래요!',
-                        isDirectionLeft: false,
-                      ),
-                    ],
-                  ),
-                ),
+              WebtoonPageFrame(
+                webtoonId: webtoonId,
               ),
             ],
           ),
