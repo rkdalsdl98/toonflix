@@ -12,6 +12,7 @@ class LoginButton extends StatefulWidget {
   final Color buttonTextColor;
   final String identifier;
   final int showButtonDuration;
+  final void Function(String) onChangePage;
   bool showButton = false;
 
   LoginButton({
@@ -23,6 +24,7 @@ class LoginButton extends StatefulWidget {
     this.buttonTextColor = Colors.white,
     required this.identifier,
     this.showButtonDuration = 500,
+    required this.onChangePage,
   });
 
   @override
@@ -33,16 +35,6 @@ class _LoginButtonState extends State<LoginButton> {
   onPressButton() {
     if (widget.showButton) {
       WidgetBuilder builder = guest(context);
-
-      switch (widget.identifier) {
-        case 'toonflix':
-          builder = login(context);
-          break;
-        case 'register':
-          builder = register(context);
-          break;
-        default:
-      }
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -52,20 +44,10 @@ class _LoginButtonState extends State<LoginButton> {
     }
   }
 
-  WidgetBuilder login(BuildContext context) {
-    return (context) => HomeScreen(
-          identifier: widget.identifier,
-        );
-  }
-
   WidgetBuilder guest(BuildContext context) {
     return (context) => HomeScreen(
           identifier: widget.identifier,
         );
-  }
-
-  WidgetBuilder register(BuildContext context) {
-    return (context) => const Text('Do Not Used.');
   }
 
   @override
@@ -88,7 +70,7 @@ class _LoginButtonState extends State<LoginButton> {
         milliseconds: 1000,
       ),
       child: GestureDetector(
-        onTap: onPressButton,
+        onTap: () => widget.onChangePage(widget.identifier),
         child: Container(
           height: 80 * scaleWidth(context),
           width: 400 * scaleWidth(context),

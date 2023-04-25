@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:toonflix/service/models/EpisodeModel.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -60,8 +61,11 @@ class WebtoonPageButton extends StatelessWidget {
                       color: Colors.black.withOpacity(.3))
                 ]),
             child: Center(
-                child: Text(
+                child: AutoSizeText(
               isDirectionLeft ? episode.title : '처음부터 정주행 하기',
+              minFontSize: 8,
+              maxFontSize: 12,
+              textAlign: TextAlign.center,
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w600,

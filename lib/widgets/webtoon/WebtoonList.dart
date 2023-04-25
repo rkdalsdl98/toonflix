@@ -28,7 +28,6 @@ class _WebtoonListState extends State<WebtoonList> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final webtoonList = snapshot.data!;
-          print(webtoonList);
           return ListView.separated(
             itemCount: webtoonList.length,
             itemBuilder: (context, idx) {
