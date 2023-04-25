@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:toonflix/service/ApiService.dart';
 import '../globalfuncs/Desigh.dart';
 import '../widgets/global/GlobalAppBar.dart';
 import '../widgets/login/LoginButton.dart';
@@ -10,7 +9,6 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ApiService.getEpisodeById('808677');
     return Scaffold(
       body: DecoratedBox(
         decoration: BoxDecoration(

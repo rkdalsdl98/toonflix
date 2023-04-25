@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
-import 'package:toonflix/service/models/EpisodeModel.dart';
 
+import 'models/EpisodeModel.dart';
 import 'models/WebtoonModel.dart';
 
 class ApiService {
@@ -42,7 +42,7 @@ class ApiService {
     final res = await http.get(url);
 
     if (res.statusCode == 200) {
-      final json = jsonDecode(res.body);
+      final dynamic json = jsonDecode(res.body);
       final EpisodeModel episode = EpisodeModel.fromJson(json);
       return episode;
     }
