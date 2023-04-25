@@ -51,8 +51,8 @@ class _HomeScreenState extends State<HomeScreen> {
           return false;
         },
       ),
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(64),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: false,
         ),
