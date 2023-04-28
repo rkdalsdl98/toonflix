@@ -70,7 +70,9 @@ class _LoginButtonState extends State<LoginButton> {
         milliseconds: 1000,
       ),
       child: GestureDetector(
-        onTap: () => widget.onChangePage(widget.identifier),
+        onTap: widget.showButton
+            ? () => widget.onChangePage(widget.identifier)
+            : null,
         child: Container(
           height: 80 * scaleWidth(context),
           width: 400 * scaleWidth(context),

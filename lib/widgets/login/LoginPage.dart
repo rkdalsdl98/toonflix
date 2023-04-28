@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
+import 'package:toonflix/service/UserService.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String userId = '';
+  String userPass = '';
+
+  login() {
+    if (userId != '' && userPass != '') {
+      UserService.login(userId, userPass);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +49,14 @@ class LoginPage extends StatelessWidget {
                 BoxDecoration(color: const Color(0xFF221F1F).withOpacity(.6)),
             child: Column(
               children: [
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
                   child: TextField(
-                    style: TextStyle(
+                    onChanged: (value) => userId = value,
+                    style: const TextStyle(
                       fontSize: 13,
                     ),
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(30),
@@ -50,16 +66,17 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.symmetric(
+                Padding(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 20,
                   ),
                   child: TextField(
-                    style: TextStyle(
+                    onChanged: (value) => userPass = value,
+                    style: const TextStyle(
                       fontSize: 13,
                     ),
                     obscureText: true,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(30),
@@ -103,6 +120,7 @@ class LoginPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: GestureDetector(
+              onTap: login,
               child: Container(
                 width: 120 * scaleWidth(context),
                 height: 40 * scaleHeight(context),

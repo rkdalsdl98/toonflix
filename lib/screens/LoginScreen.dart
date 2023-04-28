@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:toonflix/globalfuncs/System.dart';
 import 'package:toonflix/screens/homescreen.dart';
 import 'package:toonflix/widgets/login/LoginPage.dart';
 import 'package:toonflix/widgets/login/RegistPage.dart';
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
           showingPage = const LoginPage();
           break;
         case 'regist':
-          showingPage = RegistPage();
+          showingPage = const RegistPage();
           break;
         case 'guest':
           Navigator.push(
@@ -51,28 +52,36 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: DecoratedBox(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('assets/icons/화산귀환.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.black.withOpacity(0.1), BlendMode.dstATop),
+      body: WillPopScope(
+        onWillPop: () async {
+          if (nowPage != 'default') {
+            await onBackToHome(context);
+          }
+          return true;
+        },
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: const AssetImage('assets/icons/화산귀환.jpg'),
+              fit: BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                  Colors.black.withOpacity(0.1), BlendMode.dstATop),
+            ),
           ),
-        ),
-        child: WillPopScope(
-          child: showingPage,
-          onWillPop: () async {
-            setState(() {});
-            if (nowPage == 'default') {
-              SystemNavigator.pop();
-              return true;
-            } else {
-              nowPage = 'default';
-              showingPage = DefaultPage(onChangePage: onChangePage);
-              return false;
-            }
-          },
+          child: WillPopScope(
+            child: showingPage,
+            onWillPop: () async {
+              setState(() {});
+              if (nowPage == 'default') {
+                SystemNavigator.pop();
+                return true;
+              } else {
+                nowPage = 'default';
+                showingPage = DefaultPage(onChangePage: onChangePage);
+                return false;
+              }
+            },
+          ),
         ),
       ),
       appBar: PreferredSize(
