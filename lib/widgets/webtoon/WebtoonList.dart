@@ -27,11 +27,11 @@ class _WebtoonListState extends State<WebtoonList> {
       future: webtoons,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final webtoonsList = snapshot.data!;
+          final webtoonList = snapshot.data!;
           return ListView.separated(
-            itemCount: webtoonsList.length,
+            itemCount: webtoonList.length,
             itemBuilder: (context, idx) {
-              var webtoonColum = webtoonsList[idx];
+              var webtoonColum = webtoonList[idx];
               return WebtoonColum(
                 webtoonColum: webtoonColum,
               );
