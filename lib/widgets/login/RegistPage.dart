@@ -26,7 +26,7 @@ class _RegistPageState extends State<RegistPage> {
   checkIsDuplicated() async {
     try {
       if (idController.text.isEmpty) {
-        await alertMessage('아이디를 입력해 주세요.', context);
+        await alertMessage('아이디를 입력해 주세요.', context, false);
       }
       final result = await UserService.checkDuplicatedId(idController.text);
       if (!result && context.mounted) {
@@ -35,12 +35,51 @@ class _RegistPageState extends State<RegistPage> {
           isDuplicatedId = !state;
         });
       } else {
-        await alertMessage('중복된 아이디 입니다.', context);
+        await alertMessage('중복된 아이디 입니다.', context, false);
       }
     } catch (e) {
       print(e);
     }
     setState(() {});
+  }
+
+  regist() async {
+    if (isDuplicatedId == false) {
+      if (passController.text == passCheckController.text) {
+        if (nicknameController.text.length <= 10) {
+          final isValidBirth = UserService.checkBirthForm(birthController.text);
+          if (isValidBirth) {
+            if (isUnderstand == true) {
+              Map<String, dynamic> user = {
+                "name": idController.text,
+                "pass": passController.text,
+                "nickname": nicknameController.text,
+                "birth": birthController.text
+              };
+
+              final res = await UserService.register(user);
+              if (res && context.mounted) {
+                await alertMessage(
+                    '아이디를 성공적으로 생성하셨습니다!\n(홈 화면으로 돌아갑니다.)', context, true);
+              } else {
+                await alertMessage(
+                    '서버에 문제가 생겨 아이디를 생성하는데 실패했습니다.', context, false);
+              }
+            } else {
+              await alertMessage('개인정보 수집에 동의 해주세요.', context, false);
+            }
+          } else {
+            await alertMessage('생일을 형식에 맞게 작성 해주세요.', context, false);
+          }
+        } else {
+          await alertMessage('닉네임은 10글자 이내로 작성해주세요.', context, false);
+        }
+      } else {
+        await alertMessage('비밀번호를 확인해주세요.', context, false);
+      }
+    } else {
+      await alertMessage('아이디를 확인해 주세요.', context, false);
+    }
   }
 
   @override
@@ -116,11 +155,13 @@ class _RegistPageState extends State<RegistPage> {
                   labelText: '비밀번호',
                   hintText: '비밀번호를 입력해주세요.',
                   controller: passController,
+                  obscureText: true,
                 ),
                 InputField(
                   labelText: '비밀번호 확인',
                   hintText: '비밀번호 확인을 위해 한번 더 입력해주세요.',
                   controller: passCheckController,
+                  obscureText: true,
                 ),
                 InputField(
                   labelText: '닉네임',
@@ -176,6 +217,7 @@ class _RegistPageState extends State<RegistPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: GestureDetector(
+              onTap: () => regist(),
               child: Container(
                 width: 120 * scaleWidth(context),
                 height: 40 * scaleHeight(context),

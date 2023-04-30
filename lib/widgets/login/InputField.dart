@@ -5,14 +5,15 @@ class InputField extends StatelessWidget {
   final String hintText;
   final TextEditingController controller;
   bool? enabled;
+  bool? obscureText;
 
-  InputField({
-    super.key,
-    required this.labelText,
-    required this.hintText,
-    required this.controller,
-    this.enabled,
-  });
+  InputField(
+      {super.key,
+      required this.labelText,
+      required this.hintText,
+      required this.controller,
+      this.enabled,
+      this.obscureText});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class InputField extends StatelessWidget {
         horizontal: 30,
       ),
       child: TextField(
+        obscureText: obscureText ?? false,
         enabled: enabled ?? true,
         controller: controller,
         style: const TextStyle(

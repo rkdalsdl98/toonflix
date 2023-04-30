@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:toonflix/globalfuncs/System.dart';
 import 'package:toonflix/screens/homescreen.dart';
+import 'package:toonflix/service/UserService.dart';
 import 'package:toonflix/widgets/login/LoginPage.dart';
 import 'package:toonflix/widgets/login/RegistPage.dart';
 import '../widgets/global/GlobalAppBar.dart';
@@ -41,12 +42,30 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
+  Future<void> initData() async {
     showingPage = DefaultPage(
       onChangePage: onChangePage,
     );
+    final isLogined = await UserService.getLogined();
+
+    if (isLogined == null) {
+      await UserService.setLogined(false);
+    } else if (isLogined) {
+      if (context.mounted) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(identifier: 'login'),
+          ),
+        );
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initData();
   }
 
   @override
@@ -55,7 +74,12 @@ class _LoginScreenState extends State<LoginScreen> {
       body: WillPopScope(
         onWillPop: () async {
           if (nowPage != 'default') {
-            await onBackToHome(context);
+            bool result = false;
+            await alertMessageYesOrNo(
+                '로그인 화면으로 돌아 가시겠습니까?\n(계정은 자동으로 로그아웃 됩니다.)',
+                context,
+                (state) => result = state);
+            return result;
           }
           return true;
         },

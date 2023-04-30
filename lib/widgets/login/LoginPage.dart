@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
+import 'package:toonflix/globalfuncs/System.dart';
 import 'package:toonflix/service/UserService.dart';
+
+import '../../screens/Homescreen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,9 +16,21 @@ class _LoginPageState extends State<LoginPage> {
   String userId = '';
   String userPass = '';
 
-  login() {
+  login() async {
     if (userId != '' && userPass != '') {
-      UserService.login(userId, userPass);
+      final loginResult = await UserService.login(userId, userPass);
+      if (context.mounted) {
+        if (loginResult) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(identifier: 'login'),
+            ),
+          );
+        } else {
+          alertMessage('아이디와 비밀번호를 확인해주세요.', context, false);
+        }
+      }
     }
   }
 
