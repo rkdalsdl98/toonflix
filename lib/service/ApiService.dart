@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:toonflix/service/models/CountsModel.dart';
 
 import 'models/EpisodeModel.dart';
 import 'models/WebtoonModel.dart';
@@ -47,5 +48,36 @@ class ApiService {
       return episode;
     }
     throw Error();
+  }
+
+  static Future<CountsModel> getWebtoonCounts(String webtoonId) async {
+    final baseurl = dotenv.env['BASEURL'];
+    final url = Uri.parse('$baseurl/counts/$webtoonId');
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      final dynamic json = jsonDecode(res.body);
+      final CountsModel counts = CountsModel.fromJson(json);
+      return counts;
+    }
+    throw Error();
+  }
+
+  static Future<bool> increaseLikeCount(String webtoonId) async {
+    final baseurl = dotenv.env['BASEURL'];
+    final url = Uri.parse('$baseurl/increase/like/$webtoonId');
+    final res = await http.patch(url);
+
+    if (res.statusCode == 200) return true;
+    return false;
+  }
+
+  static Future<bool> subtractLikeCount(String webtoonId) async {
+    final baseurl = dotenv.env['BASEURL'];
+    final url = Uri.parse('$baseurl/subtract/like/$webtoonId');
+    final res = await http.patch(url);
+
+    if (res.statusCode == 200) return true;
+    return false;
   }
 }

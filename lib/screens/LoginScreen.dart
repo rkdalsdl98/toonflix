@@ -51,6 +51,15 @@ class _LoginScreenState extends State<LoginScreen> {
     if (isLogined == null) {
       await UserService.setLogined(false);
     } else if (isLogined) {
+      final now = DateTime.now();
+      final day = now.day;
+
+      final lastLoginedday = await UserService.getStorageIntData('day');
+
+      if (lastLoginedday != day) {
+        await UserService.resetYesterDayData(day);
+      }
+
       if (context.mounted) {
         Navigator.push(
           context,
@@ -112,6 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
         preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: false,
+          showRefreshButtion: false,
         ),
       ),
     );

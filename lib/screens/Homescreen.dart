@@ -22,6 +22,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  Future<void> updateWebtoon() async {
+    print('hi');
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: false,
+          showRefreshButtion: false,
         ),
       ),
       drawer: Drawer(
