@@ -22,10 +22,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  Future<void> updateWebtoon() async {
-    print('hi');
-  }
-
   @override
   void initState() {
     super.initState();
@@ -42,17 +38,21 @@ class _HomeScreenState extends State<HomeScreen> {
               const Category(),
               SizedBox(
                 height: 520 * scaleHeight(context),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: WebtoonList(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: WebtoonList(
+                    identifier: widget.identifier,
+                  ),
                 ),
               ),
             ],
           ),
         ),
         onWillPop: () async {
-          await onBackPressedByHome(context);
-          return false;
+          if (widget.identifier != 'guest') {
+            await onBackPressedByHome(context);
+          }
+          return true;
         },
       ),
       appBar: PreferredSize(

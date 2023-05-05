@@ -106,7 +106,11 @@ class UserService {
 
     storage.setString('userId', model.userId);
     storage.setString('nickname', model.nickname);
-    storage.setStringList('liked', model.liked!.split(''));
+    storage.setStringList(
+        'liked',
+        model.liked!.contains(',')
+            ? model.liked!.split(',')
+            : ['${model.liked}']);
     storage.setString('birth', model.birth);
     storage.setInt('pk', model.pk);
     storage.setInt('cash', model.cash);

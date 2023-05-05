@@ -60,7 +60,7 @@ class _RegistPageState extends State<RegistPage> {
               final res = await UserService.register(user);
               if (res && context.mounted) {
                 await alertMessage(
-                    '아이디를 성공적으로 생성하셨습니다!\n(홈 화면으로 돌아갑니다.)', context, true);
+                    '아이디를 성공적으로 생성하셨습니다!\n(홈 화면으로 돌아갑니다.)', context, false);
               } else {
                 await alertMessage(
                     '서버에 문제가 생겨 아이디를 생성하는데 실패했습니다.', context, false);

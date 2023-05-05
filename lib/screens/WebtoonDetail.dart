@@ -3,6 +3,7 @@ import 'package:toonflix/globalfuncs/Desigh.dart';
 import 'package:toonflix/service/models/CountsModel.dart';
 import 'package:toonflix/widgets/webtoon/Genre.dart';
 
+import '../globalfuncs/System.dart';
 import '../widgets/global/GlobalAppBar.dart';
 import '../widgets/webtoon/WebtoonPageFrame.dart';
 
@@ -17,6 +18,7 @@ class WebtoonDetail extends StatefulWidget {
   final String thumb;
   final String title;
   final String webtoonId;
+  final String userIdentifier;
   bool isLiked;
 
   WebtoonDetail({
@@ -31,6 +33,7 @@ class WebtoonDetail extends StatefulWidget {
     required this.updateWebtoon,
     required this.isLiked,
     required this.updateLikedWebtoon,
+    required this.userIdentifier,
   });
 
   @override
@@ -44,8 +47,12 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
   }
 
   Future<void> updateLikedWithDetail() async {
-    widget.isLiked = !widget.isLiked;
-    await widget.updateLikedWebtoon(widget.isLiked);
+    if (widget.userIdentifier != 'guest') {
+      widget.isLiked = !widget.isLiked;
+      await widget.updateLikedWebtoon(widget.isLiked);
+    } else {
+      alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
+    }
     setState(() {});
   }
 

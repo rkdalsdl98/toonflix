@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:toonflix/globalfuncs/System.dart';
 import 'package:toonflix/screens/homescreen.dart';
 import 'package:toonflix/service/UserService.dart';
@@ -84,11 +83,14 @@ class _LoginScreenState extends State<LoginScreen> {
         onWillPop: () async {
           if (nowPage != 'default') {
             bool result = false;
-            await alertMessageYesOrNo(
-                '로그인 화면으로 돌아 가시겠습니까?\n(계정은 자동으로 로그아웃 됩니다.)',
-                context,
-                (state) => result = state);
-            return result;
+            await alertMessageYesOrNo('초기 화면으로 돌아 가시겠습니까?\n(입력한 내용은 사라집니다.)',
+                context, (state) => result = state);
+            if (result) {
+              nowPage = 'default';
+              showingPage = DefaultPage(onChangePage: onChangePage);
+            }
+            setState(() {});
+            return false;
           }
           return true;
         },
@@ -101,20 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Colors.black.withOpacity(0.1), BlendMode.dstATop),
             ),
           ),
-          child: WillPopScope(
-            child: showingPage,
-            onWillPop: () async {
-              setState(() {});
-              if (nowPage == 'default') {
-                SystemNavigator.pop();
-                return true;
-              } else {
-                nowPage = 'default';
-                showingPage = DefaultPage(onChangePage: onChangePage);
-                return false;
-              }
-            },
-          ),
+          child: showingPage,
         ),
       ),
       appBar: PreferredSize(

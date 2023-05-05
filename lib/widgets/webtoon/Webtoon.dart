@@ -17,11 +17,9 @@ final Map<String, Color> identifierColor = {
 
 class Webtoon extends StatefulWidget {
   final WebtoonModel webtoon;
+  final String identifier;
 
-  const Webtoon({
-    super.key,
-    required this.webtoon,
-  });
+  const Webtoon({super.key, required this.webtoon, required this.identifier});
 
   @override
   State<Webtoon> createState() => _WebtoonState();
@@ -30,40 +28,16 @@ class Webtoon extends StatefulWidget {
 class _WebtoonState extends State<Webtoon> {
   late List<String> genres;
   late CountsModel counts;
-  late bool isLiked;
+  bool isLiked = false;
 
   Future<void> init() async {
-    final SharedPreferences storage = await SharedPreferences.getInstance();
-    final likes = storage.getStringList('liked');
+    if (widget.identifier != 'guest') {
+      final SharedPreferences storage = await SharedPreferences.getInstance();
+      final likes = storage.getStringList('liked');
 
-    if (likes != null) {
-      isLiked = likes.contains(widget.webtoon.title);
+      isLiked = likes!.contains(widget.webtoon.title);
     }
-  }
 
-  Future<CountsModel> updateWebtoon() async {
-    counts = await ApiService.getWebtoonCounts(widget.webtoon.webtoonid);
-    setState(() {});
-    return counts;
-  }
-
-  Future<void> updateLikedWebtoon(bool isLikedByDetail) async {
-    await UserService.updateLikeWebtoon(
-        !isLikedByDetail, widget.webtoon.title, widget.webtoon.webtoonid);
-
-    if (isLikedByDetail) {
-      ++counts.likecount;
-    } else {
-      --counts.likecount;
-    }
-    isLiked = isLikedByDetail;
-    setState(() {});
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    init();
     genres = widget.webtoon.genre.split(',');
     counts = CountsModel.fromJson({
       'likecount': widget.webtoon.likecount,
@@ -73,12 +47,40 @@ class _WebtoonState extends State<Webtoon> {
     if (genres.length > 3) genres.length = 3;
   }
 
+  Future<CountsModel> updateWebtoon() async {
+    counts = await ApiService.getWebtoonCounts(widget.webtoon.webtoonid);
+    setState(() {});
+    return counts;
+  }
+
+  Future<void> updateLikedWebtoon(bool isLikedByDetail) async {
+    if (widget.identifier != 'guest') {
+      await UserService.updateLikeWebtoon(
+          !isLikedByDetail, widget.webtoon.title, widget.webtoon.webtoonid);
+
+      if (isLikedByDetail) {
+        ++counts.likecount;
+      } else {
+        --counts.likecount;
+      }
+      isLiked = isLikedByDetail;
+    }
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    init();
+  }
+
   @override
   Widget build(BuildContext context) {
     onViewDetail() {
       return Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return WebtoonDetail(
+            userIdentifier: widget.identifier,
             updateWebtoon: updateWebtoon,
             updateLikedWebtoon: updateLikedWebtoon,
             counts: counts,
