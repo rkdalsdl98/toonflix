@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
+import 'package:toonflix/screens/CommentScreen.dart';
 import 'package:toonflix/service/models/CountsModel.dart';
 import 'package:toonflix/widgets/webtoon/Genre.dart';
 
@@ -141,7 +142,16 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                                 children: [
                                   GestureDetector(
                                     child: const Icon(Icons.message),
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommentScreen(
+                                            webtoonId: widget.webtoonId,
+                                          );
+                                        }),
+                                      );
+                                    },
                                   ),
                                   Text(
                                     '+ ${widget.counts.commentcount > 999 ? 999 : widget.counts.commentcount}',

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:toonflix/service/models/CommentModel.dart';
 import 'package:toonflix/service/models/CountsModel.dart';
 
 import 'models/EpisodeModel.dart';
@@ -79,5 +80,23 @@ class ApiService {
 
     if (res.statusCode == 200) return true;
     return false;
+  }
+
+  static Future<List<CommentModel>> getWebtoonsComments(
+      String webtoonId) async {
+    final baseurl = dotenv.env['BASEURL_COMMENT'];
+    final url = Uri.parse('$baseurl/$webtoonId/all');
+    final res = await http.get(url);
+
+    final List<CommentModel> comments = [];
+    if (res.statusCode == 200) {
+      final List<dynamic> json = jsonDecode(res.body);
+
+      for (var data in json) {
+        final CommentModel comment = CommentModel.fromJson(data);
+        comments.add(comment);
+      }
+    }
+    return comments;
   }
 }
