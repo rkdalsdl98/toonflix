@@ -132,7 +132,6 @@ class UserService {
   }
 
   static Future<bool> resetLikeWebtoon(String userId, int pk) async {
-    print('hi');
     final baseurl = dotenv.env['BASEURL_USER'];
     final url = Uri.parse('$baseurl/update/like/reset');
 
@@ -167,6 +166,28 @@ class UserService {
     });
 
     if (res.statusCode == 200) return true;
+    return false;
+  }
+
+  static Future<bool> addComment(String commentText, String webtoonId) async {
+    final baseurl = dotenv.env['BASEURL_COMMENT'];
+    final url = Uri.parse('$baseurl/add');
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+
+    final baseClock = DateTime.now();
+    final String now = "${baseClock.year}-${baseClock.month}-${baseClock.day}";
+
+    final Map<String, dynamic> send = {
+      "comment_text": commentText,
+      "uptime": now,
+      "owner": storage.getString('nickname')!,
+      "owner_id": "${storage.getInt('pk')}",
+      "webtoon_id": webtoonId
+    };
+
+    final res = await http.post(url, body: send);
+
+    if (res.statusCode == 201) return true;
     return false;
   }
 }

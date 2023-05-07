@@ -148,6 +148,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                                         MaterialPageRoute(builder: (context) {
                                           return CommentScreen(
                                             webtoonId: widget.webtoonId,
+                                            counts: widget.counts,
                                           );
                                         }),
                                       );

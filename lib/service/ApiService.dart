@@ -91,7 +91,7 @@ class ApiService {
     final List<CommentModel> comments = [];
     if (res.statusCode == 200) {
       final List<dynamic> json = jsonDecode(res.body);
-
+      print(json);
       for (var data in json) {
         final CommentModel comment = CommentModel.fromJson(data);
         comments.add(comment);

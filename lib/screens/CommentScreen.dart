@@ -3,14 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
 import 'package:toonflix/globalfuncs/System.dart';
 import 'package:toonflix/service/ApiService.dart';
+import 'package:toonflix/service/UserService.dart';
 import 'package:toonflix/service/models/CommentModel.dart';
 import 'package:toonflix/widgets/comment/CommentList.dart';
 
+import '../service/models/CountsModel.dart';
+
 class CommentScreen extends StatefulWidget {
   final String webtoonId;
+  final CountsModel counts;
+
   const CommentScreen({
     super.key,
     required this.webtoonId,
+    required this.counts,
   });
 
   @override
@@ -19,7 +25,21 @@ class CommentScreen extends StatefulWidget {
 
 class _CommentScreenState extends State<CommentScreen> {
   TextEditingController controller = TextEditingController();
+  FocusNode focus = FocusNode();
   late Future<List<CommentModel>> comments;
+
+  onSubmitComment() async {
+    final bool res =
+        await UserService.addComment(controller.text, widget.webtoonId);
+
+    if (!res && context.mounted) {
+      await alertMessage('의견을 남기는데 실패했습니다.', context, false);
+    }
+
+    controller.clear();
+    focus.unfocus();
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -35,6 +55,7 @@ class _CommentScreenState extends State<CommentScreen> {
         children: [
           TextField(
             controller: controller,
+            focusNode: focus,
             maxLines: 2,
             maxLength: 255,
             decoration: InputDecoration(
@@ -49,7 +70,7 @@ class _CommentScreenState extends State<CommentScreen> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: GestureDetector(
-              onTap: () {},
+              onTap: onSubmitComment,
               child: Container(
                 width: 180 * scaleWidth(context),
                 height: 50 * scaleHeight(context),
@@ -94,9 +115,9 @@ class _CommentScreenState extends State<CommentScreen> {
           child: AppBar(
             centerTitle: true,
             automaticallyImplyLeading: false,
-            title: const Text(
-              '추천 456   의견 122',
-              style: TextStyle(fontWeight: FontWeight.w500),
+            title: Text(
+              '추천 ${widget.counts.likecount}   의견 ${widget.counts.commentcount}',
+              style: const TextStyle(fontWeight: FontWeight.w500),
             ),
             backgroundColor: Theme.of(context).colorScheme.background,
             actions: [
