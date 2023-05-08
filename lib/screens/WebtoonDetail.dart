@@ -11,6 +11,7 @@ import '../widgets/webtoon/WebtoonPageFrame.dart';
 class WebtoonDetail extends StatefulWidget {
   CountsModel counts;
 
+  final bool enableCommentField;
   final Future<CountsModel> Function() updateWebtoon;
   final Future<void> Function(bool) updateLikedWebtoon;
   final String identifier;
@@ -35,6 +36,7 @@ class WebtoonDetail extends StatefulWidget {
     required this.isLiked,
     required this.updateLikedWebtoon,
     required this.userIdentifier,
+    required this.enableCommentField,
   });
 
   @override
@@ -52,7 +54,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
       widget.isLiked = !widget.isLiked;
       await widget.updateLikedWebtoon(widget.isLiked);
     } else {
-      alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
+      await alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
     }
     setState(() {});
   }
@@ -147,6 +149,8 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                                         context,
                                         MaterialPageRoute(builder: (context) {
                                           return CommentScreen(
+                                            enableCommentField:
+                                                widget.enableCommentField,
                                             webtoonId: widget.webtoonId,
                                             counts: widget.counts,
                                           );

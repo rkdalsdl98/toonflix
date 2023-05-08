@@ -6,9 +6,12 @@ import 'CommentItem.dart';
 
 class CommentList extends StatelessWidget {
   final List<CommentModel> comments;
+  final bool enableActions;
+
   const CommentList({
     super.key,
     required this.comments,
+    required this.enableActions,
   });
 
   @override
@@ -17,7 +20,11 @@ class CommentList extends StatelessWidget {
       itemCount: comments.isEmpty ? 1 : comments.length,
       itemBuilder: (context, idx) {
         if (comments.isEmpty) return const Text('쏘링 코멘트가 없떵...');
-        return CommentItem(commentData: comments[idx]);
+        return CommentItem(
+          commentData: comments[idx],
+          enableActions: enableActions,
+          isLikedComment: false,
+        );
       },
       separatorBuilder: (context, idx) {
         return SizedBox(

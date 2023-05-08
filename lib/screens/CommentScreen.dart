@@ -12,12 +12,13 @@ import '../service/models/CountsModel.dart';
 class CommentScreen extends StatefulWidget {
   final String webtoonId;
   final CountsModel counts;
+  final bool enableCommentField;
 
-  const CommentScreen({
-    super.key,
-    required this.webtoonId,
-    required this.counts,
-  });
+  const CommentScreen(
+      {super.key,
+      required this.webtoonId,
+      required this.counts,
+      required this.enableCommentField});
 
   @override
   State<CommentScreen> createState() => _CommentScreenState();
@@ -29,6 +30,14 @@ class _CommentScreenState extends State<CommentScreen> {
   late Future<List<CommentModel>> comments;
 
   onSubmitComment() async {
+    if (controller.text.isEmpty) {
+      await alertMessage(
+          widget.enableCommentField ? '내용을 입력해 주세요.' : '로그인 이후에 이용이 가능합니다.',
+          context,
+          false);
+      return;
+    }
+
     final bool res =
         await UserService.addComment(controller.text, widget.webtoonId);
 
@@ -54,12 +63,15 @@ class _CommentScreenState extends State<CommentScreen> {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           TextField(
+            enabled: widget.enableCommentField,
             controller: controller,
             focusNode: focus,
             maxLines: 2,
             maxLength: 255,
             decoration: InputDecoration(
-              hintText: '로그인 하신후에 작성할 수 있습니다.',
+              hintText: widget.enableCommentField
+                  ? '여러분의 의견을 남겨주세요!'
+                  : '로그인 하신후에 작성할 수 있습니다.',
               filled: true,
               fillColor: const Color(0xFF444444).withOpacity(.6),
               focusedBorder: const UnderlineInputBorder(
@@ -98,10 +110,14 @@ class _CommentScreenState extends State<CommentScreen> {
               future: comments,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return CommentList(comments: snapshot.data!);
+                  return CommentList(
+                    comments: snapshot.data!,
+                    enableActions: widget.enableCommentField,
+                  );
                 }
-                return const CommentList(
-                  comments: [],
+                return CommentList(
+                  comments: const [],
+                  enableActions: widget.enableCommentField,
                 );
               },
             ),

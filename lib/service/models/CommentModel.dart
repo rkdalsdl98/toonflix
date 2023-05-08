@@ -1,6 +1,7 @@
 class CommentModel {
   final String commentText, uptime, owner, webtoonId;
-  final int likecount, ownerId, commentId, replycount;
+  final int ownerId, commentId;
+  int likecount, replycount;
 
   CommentModel.fromJson(Map<String, dynamic> json)
       : commentId = json['id'],

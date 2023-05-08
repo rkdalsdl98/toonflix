@@ -98,6 +98,7 @@ class UserService {
     if (canReset) {
       storage.setStringList('liked', []);
       storage.setInt('day', day);
+      storage.setString('commentlikes_obj', jsonEncode(<int, dynamic>{}));
     }
   }
 
@@ -121,7 +122,18 @@ class UserService {
   static Future<void> setLogined(bool logined) async {
     final SharedPreferences storage = await SharedPreferences.getInstance();
     if (!logined) {
+      final String? list = storage.getString('commentlikes_obj');
       storage.clear();
+
+      if (list != null) {
+        final now = DateTime.now();
+        final day = now.day;
+        final List<dynamic> decodeList = jsonDecode(list);
+
+        if (decodeList[0]["uptime"] == day) {
+          storage.setString('commentlikes_obj', list);
+        }
+      }
     }
     storage.setBool('logined', logined);
   }
@@ -189,5 +201,98 @@ class UserService {
 
     if (res.statusCode == 201) return true;
     return false;
+  }
+
+  static dynamic findUserDataById(int pk, List<dynamic> list) {
+    dynamic foundData;
+    for (int i = 0; i < list.length; ++i) {
+      if (list[i]["pk"] == pk) {
+        foundData = {
+          "data": list[i],
+          "index": i,
+        };
+        break;
+      }
+    }
+    return foundData;
+  }
+
+  static Future<bool> addLikeComment(String commentId) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    final String? list = storage.getString('commentlikes_obj');
+    final int? pk = storage.getInt('pk');
+
+    try {
+      if (list == null) {
+        final now = DateTime.now();
+        final day = now.day;
+        final List<dynamic> newList = [
+          {
+            "pk": pk,
+            "uptime": day,
+            "likes": [commentId]
+          }
+        ];
+        final String encodeList = jsonEncode(newList);
+        storage.setString('commentlikes_obj', encodeList);
+      } else {
+        final List<dynamic> decodeList = jsonDecode(list);
+
+        dynamic json = findUserDataById(pk!, decodeList);
+        if (json == null) {
+          final now = DateTime.now();
+          final day = now.day;
+          decodeList.add({
+            "pk": pk,
+            "uptime": day,
+            "likes": [commentId]
+          });
+
+          final String encodeList = jsonEncode(decodeList);
+          storage.setString('commentlikes_obj', encodeList);
+          return true;
+        }
+
+        dynamic userData = json["data"];
+        int index = json["index"];
+
+        List<dynamic> likes = userData["likes"];
+        if (likes.contains(commentId)) return false;
+
+        likes.add(commentId);
+        userData["likes"] = likes;
+
+        decodeList[index] = userData;
+
+        final String encodeList = jsonEncode(decodeList);
+        storage.setString('commentlikes_obj', encodeList);
+      }
+      return true;
+    } catch (e) {
+      throw Error();
+    }
+  }
+
+  /// 1 => 모든 요청 성공
+  /// 0 => 서버 업데이트 실패
+  /// -1 => 모든 요청 실패
+  static Future<int> updateCommentLikeCount(String commentId) async {
+    try {
+      final bool canAdd = await addLikeComment(commentId);
+
+      if (canAdd) {
+        final baseurl = dotenv.env['BASEURL_COMMENT'];
+        final url = Uri.parse('$baseurl/like/increase/$commentId');
+
+        final res = await http.patch(url);
+        if (res.statusCode == 200) {
+          return 1;
+        }
+        return 0;
+      }
+      return -1;
+    } catch (e) {
+      throw Error();
+    }
   }
 }

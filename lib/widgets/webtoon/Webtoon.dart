@@ -28,6 +28,7 @@ class Webtoon extends StatefulWidget {
 class _WebtoonState extends State<Webtoon> {
   late List<String> genres;
   late CountsModel counts;
+  bool enableCommentField = false;
   bool isLiked = false;
 
   Future<void> init() async {
@@ -36,6 +37,7 @@ class _WebtoonState extends State<Webtoon> {
       final likes = storage.getStringList('liked');
 
       isLiked = likes!.contains(widget.webtoon.title);
+      enableCommentField = true;
     }
 
     genres = widget.webtoon.genre.split(',');
@@ -91,6 +93,7 @@ class _WebtoonState extends State<Webtoon> {
             identifierColor: identifierColor[widget.webtoon.company]!,
             webtoonId: widget.webtoon.webtoonid,
             isLiked: isLiked,
+            enableCommentField: enableCommentField,
           );
         },
       ));
