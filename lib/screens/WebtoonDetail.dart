@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
+import 'package:toonflix/screens/CommentScreen.dart';
 import 'package:toonflix/service/models/CountsModel.dart';
 import 'package:toonflix/widgets/webtoon/Genre.dart';
 
@@ -10,6 +11,7 @@ import '../widgets/webtoon/WebtoonPageFrame.dart';
 class WebtoonDetail extends StatefulWidget {
   CountsModel counts;
 
+  final bool enableCommentField;
   final Future<CountsModel> Function() updateWebtoon;
   final Future<void> Function(bool) updateLikedWebtoon;
   final String identifier;
@@ -34,6 +36,7 @@ class WebtoonDetail extends StatefulWidget {
     required this.isLiked,
     required this.updateLikedWebtoon,
     required this.userIdentifier,
+    required this.enableCommentField,
   });
 
   @override
@@ -51,7 +54,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
       widget.isLiked = !widget.isLiked;
       await widget.updateLikedWebtoon(widget.isLiked);
     } else {
-      alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
+      await alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
     }
     setState(() {});
   }
@@ -141,7 +144,20 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                                 children: [
                                   GestureDetector(
                                     child: const Icon(Icons.message),
-                                    onTap: () {},
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommentScreen(
+                                            refreshWithDetail: updateWithDetail,
+                                            enableCommentField:
+                                                widget.enableCommentField,
+                                            webtoonId: widget.webtoonId,
+                                            counts: widget.counts,
+                                          );
+                                        }),
+                                      );
+                                    },
                                   ),
                                   Text(
                                     '+ ${widget.counts.commentcount > 999 ? 999 : widget.counts.commentcount}',
