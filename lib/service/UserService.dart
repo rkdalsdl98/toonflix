@@ -98,7 +98,7 @@ class UserService {
     if (canReset) {
       storage.setStringList('liked', []);
       storage.setInt('day', day);
-      storage.setString('commentlikes_obj', jsonEncode(<int, dynamic>{}));
+      storage.setString('commentlikes_obj', jsonEncode(<dynamic>[]));
     }
   }
 
@@ -133,6 +133,7 @@ class UserService {
         if (decodeList[0]["uptime"] == day) {
           storage.setString('commentlikes_obj', list);
         }
+        print(decodeList);
       }
     }
     storage.setBool('logined', logined);
@@ -189,7 +190,7 @@ class UserService {
     final baseClock = DateTime.now();
     final String now = "${baseClock.year}-${baseClock.month}-${baseClock.day}";
 
-    final Map<String, dynamic> send = {
+    final Map<String, dynamic> sendData = {
       "comment_text": commentText,
       "uptime": now,
       "owner": storage.getString('nickname')!,
@@ -197,7 +198,29 @@ class UserService {
       "webtoon_id": webtoonId
     };
 
-    final res = await http.post(url, body: send);
+    final res = await http.post(url, body: sendData);
+
+    if (res.statusCode == 201) return true;
+    return false;
+  }
+
+  static Future<bool> addReply(String replytext, String commentId) async {
+    final baseurl = dotenv.env['BASEURL_REPLY'];
+    final url = Uri.parse('$baseurl/add');
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+
+    final baseClock = DateTime.now();
+    final String now = "${baseClock.year}-${baseClock.month}-${baseClock.day}";
+
+    final Map<String, dynamic> sendData = {
+      "reply_text": replytext,
+      "uptime": now,
+      "owner": storage.getString('nickname')!,
+      "owner_id": "${storage.getInt('pk')}",
+      "comment_id": commentId
+    };
+
+    final res = await http.post(url, body: sendData);
 
     if (res.statusCode == 201) return true;
     return false;
@@ -228,7 +251,7 @@ class UserService {
         final day = now.day;
         final List<dynamic> newList = [
           {
-            "pk": pk,
+            "pk": pk!,
             "uptime": day,
             "likes": [commentId]
           }

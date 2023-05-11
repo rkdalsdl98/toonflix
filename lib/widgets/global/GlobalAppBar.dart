@@ -6,6 +6,7 @@ class GlobalAppBar extends StatefulWidget {
   final bool showRefreshButtion;
   dynamic refreshCallback;
   String? titleText;
+  bool showDefaultLeading;
 
   GlobalAppBar({
     super.key,
@@ -13,6 +14,7 @@ class GlobalAppBar extends StatefulWidget {
     this.titleText,
     required this.showRefreshButtion,
     this.refreshCallback,
+    this.showDefaultLeading = false,
   });
 
   @override
@@ -26,7 +28,7 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
       height: preferredAppBarHeight,
       child: AppBar(
         centerTitle: widget.centerTitle,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: widget.showDefaultLeading,
         title: widget.titleText != null
             ? Text(widget.titleText!)
             : Image.asset(

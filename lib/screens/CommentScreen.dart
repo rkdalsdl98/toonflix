@@ -13,12 +13,15 @@ class CommentScreen extends StatefulWidget {
   final String webtoonId;
   final CountsModel counts;
   final bool enableCommentField;
+  final Future<void> Function() refreshWithDetail;
 
-  const CommentScreen(
-      {super.key,
-      required this.webtoonId,
-      required this.counts,
-      required this.enableCommentField});
+  const CommentScreen({
+    super.key,
+    required this.webtoonId,
+    required this.counts,
+    required this.enableCommentField,
+    required this.refreshWithDetail,
+  });
 
   @override
   State<CommentScreen> createState() => _CommentScreenState();
@@ -28,6 +31,12 @@ class _CommentScreenState extends State<CommentScreen> {
   TextEditingController controller = TextEditingController();
   FocusNode focus = FocusNode();
   late Future<List<CommentModel>> comments;
+
+  refreshList() async {
+    await widget.refreshWithDetail();
+    comments = ApiService.getWebtoonsComments(widget.webtoonId);
+    setState(() {});
+  }
 
   onSubmitComment() async {
     if (controller.text.isEmpty) {
@@ -47,6 +56,7 @@ class _CommentScreenState extends State<CommentScreen> {
 
     controller.clear();
     focus.unfocus();
+    await refreshList();
     setState(() {});
   }
 
@@ -84,8 +94,8 @@ class _CommentScreenState extends State<CommentScreen> {
             child: GestureDetector(
               onTap: onSubmitComment,
               child: Container(
-                width: 180 * scaleWidth(context),
-                height: 50 * scaleHeight(context),
+                width: 160 * scaleWidth(context),
+                height: 40 * scaleHeight(context),
                 decoration: BoxDecoration(
                   color: const Color(0xFFE21221).withOpacity(.6),
                   borderRadius: const BorderRadius.all(Radius.circular(45)),
@@ -137,7 +147,8 @@ class _CommentScreenState extends State<CommentScreen> {
             ),
             backgroundColor: Theme.of(context).colorScheme.background,
             actions: [
-              IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
+              IconButton(
+                  onPressed: refreshList, icon: const Icon(Icons.refresh))
             ],
           ),
         ),

@@ -149,6 +149,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                                         context,
                                         MaterialPageRoute(builder: (context) {
                                           return CommentScreen(
+                                            refreshWithDetail: updateWithDetail,
                                             enableCommentField:
                                                 widget.enableCommentField,
                                             webtoonId: widget.webtoonId,

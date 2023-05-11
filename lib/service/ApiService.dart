@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:toonflix/service/models/CommentModel.dart';
 import 'package:toonflix/service/models/CountsModel.dart';
+import 'package:toonflix/service/models/ReplyModel.dart';
 
 import 'models/EpisodeModel.dart';
 import 'models/WebtoonModel.dart';
@@ -98,5 +99,22 @@ class ApiService {
       }
     }
     return comments;
+  }
+
+  static Future<List<ReplyModel>> getCommentReplys(int commentId) async {
+    final baseurl = dotenv.env['BASEURL_REPLY'];
+    final url = Uri.parse('$baseurl/all/$commentId');
+    final res = await http.get(url);
+
+    final List<ReplyModel> replys = [];
+    if (res.statusCode == 200) {
+      final List<dynamic> json = jsonDecode(res.body);
+
+      for (var data in json) {
+        final ReplyModel reply = ReplyModel.fromJson(data);
+        replys.add(reply);
+      }
+    }
+    return replys;
   }
 }
