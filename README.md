@@ -23,7 +23,7 @@ FrontEnd
 <img src='https://cdn.jumpit.co.kr/images/stacks/flutter.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/dart.png' width="50" height="50">
 
 BackEnd
-<img src='https://cdn.jumpit.co.kr/images/stacks/typescript.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/TypeORM.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/nestjs.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/node.js.png' width="50" height="50">
+<img src='https://cdn.jumpit.co.kr/images/stacks/typescript.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/TypeORM.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/nestjs.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/node.js.png' width="50" height="50"><img src='https://cdn.jumpit.co.kr/images/stacks/python.png' width="50" height="50">
 
 Database
 <img src='https://cdn.jumpit.co.kr/images/stacks/mysql.png' width="50" height="50">
