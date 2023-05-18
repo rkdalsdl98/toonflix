@@ -81,7 +81,6 @@ class _WebtoonState extends State<Webtoon> {
   @override
   Widget build(BuildContext context) {
     onViewDetail() {
-      print(widget.webtoon.webtoonid);
       return Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return WebtoonDetail(
