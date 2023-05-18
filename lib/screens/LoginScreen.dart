@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:toonflix/globalfuncs/System.dart';
 import 'package:toonflix/screens/homescreen.dart';
 import 'package:toonflix/service/UserService.dart';
@@ -43,22 +42,35 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> initData() async {
-    showingPage = DefaultPage(
-      onChangePage: onChangePage,
-    );
-    final isLogined = await UserService.getLogined();
+    try {
+      showingPage = DefaultPage(
+        onChangePage: onChangePage,
+      );
+      final isLogined = await UserService.getLogined();
 
-    if (isLogined == null) {
-      await UserService.setLogined(false);
-    } else if (isLogined) {
-      if (context.mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(identifier: 'login'),
-          ),
-        );
+      if (isLogined == null) {
+        await UserService.setLogined(false);
+      } else if (isLogined) {
+        final now = DateTime.now();
+        final day = now.day;
+
+        final lastLoginedDay = await UserService.getStorageIntData('day');
+
+        if (lastLoginedDay != day) {
+          await UserService.resetYesterDayData(day);
+        }
+
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(identifier: 'login'),
+            ),
+          );
+        }
       }
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -75,11 +87,14 @@ class _LoginScreenState extends State<LoginScreen> {
         onWillPop: () async {
           if (nowPage != 'default') {
             bool result = false;
-            await alertMessageYesOrNo(
-                '로그인 화면으로 돌아 가시겠습니까?\n(계정은 자동으로 로그아웃 됩니다.)',
-                context,
-                (state) => result = state);
-            return result;
+            await alertMessageYesOrNo('초기 화면으로 돌아 가시겠습니까?\n(입력한 내용은 사라집니다.)',
+                context, (state) => result = state);
+            if (result) {
+              nowPage = 'default';
+              showingPage = DefaultPage(onChangePage: onChangePage);
+            }
+            setState(() {});
+            return false;
           }
           return true;
         },
@@ -92,26 +107,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   Colors.black.withOpacity(0.1), BlendMode.dstATop),
             ),
           ),
-          child: WillPopScope(
-            child: showingPage,
-            onWillPop: () async {
-              setState(() {});
-              if (nowPage == 'default') {
-                SystemNavigator.pop();
-                return true;
-              } else {
-                nowPage = 'default';
-                showingPage = DefaultPage(onChangePage: onChangePage);
-                return false;
-              }
-            },
-          ),
+          child: showingPage,
         ),
       ),
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: false,
+          showRefreshButtion: false,
         ),
       ),
     );

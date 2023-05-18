@@ -5,11 +5,10 @@ import 'Webtoon.dart';
 
 class WebtoonColum extends StatefulWidget {
   final List<WebtoonModel> webtoonColum;
+  final String identifier;
 
-  const WebtoonColum({
-    super.key,
-    required this.webtoonColum,
-  });
+  const WebtoonColum(
+      {super.key, required this.webtoonColum, required this.identifier});
 
   @override
   State<WebtoonColum> createState() => _WebtoonColumState();
@@ -26,6 +25,7 @@ class _WebtoonColumState extends State<WebtoonColum> {
             for (var webtoon in widget.webtoonColum)
               Webtoon(
                 webtoon: webtoon,
+                identifier: widget.identifier,
               )
           ],
         ),
