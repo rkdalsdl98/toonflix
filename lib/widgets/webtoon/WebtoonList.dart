@@ -6,7 +6,12 @@ import '../../service/ApiService.dart';
 import 'WebtoonColum.dart';
 
 class WebtoonList extends StatefulWidget {
-  const WebtoonList({super.key});
+  final String identifier;
+
+  const WebtoonList({
+    super.key,
+    required this.identifier,
+  });
 
   @override
   State<WebtoonList> createState() => _WebtoonListState();
@@ -34,6 +39,7 @@ class _WebtoonListState extends State<WebtoonList> {
               var webtoonColum = webtoonList[idx];
               return WebtoonColum(
                 webtoonColum: webtoonColum,
+                identifier: widget.identifier,
               );
             },
             separatorBuilder: (context, idx) => SizedBox(

@@ -1,29 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
+import 'package:toonflix/screens/CommentScreen.dart';
+import 'package:toonflix/service/models/CountsModel.dart';
 import 'package:toonflix/widgets/webtoon/Genre.dart';
+import 'package:toonflix/widgets/webtoon/WebtoonPageFrameLezhin.dart';
 
+import '../globalfuncs/System.dart';
 import '../widgets/global/GlobalAppBar.dart';
 import '../widgets/webtoon/WebtoonPageFrame.dart';
 
-class WebtoonDetail extends StatelessWidget {
-  final int likeCount;
+class WebtoonDetail extends StatefulWidget {
+  CountsModel counts;
+
+  final bool enableCommentField;
+  final Future<CountsModel> Function() updateWebtoon;
+  final Future<void> Function(bool) updateLikedWebtoon;
   final String identifier;
   final Color identifierColor;
   final List<String> genres;
   final String thumb;
   final String title;
   final String webtoonId;
+  final String userIdentifier;
+  bool isLiked;
 
-  const WebtoonDetail({
+  WebtoonDetail({
     super.key,
-    required this.likeCount,
     required this.identifier,
     required this.genres,
     required this.thumb,
     required this.title,
     required this.identifierColor,
     required this.webtoonId,
+    required this.counts,
+    required this.updateWebtoon,
+    required this.isLiked,
+    required this.updateLikedWebtoon,
+    required this.userIdentifier,
+    required this.enableCommentField,
   });
+
+  @override
+  State<WebtoonDetail> createState() => _WebtoonDetailState();
+}
+
+class _WebtoonDetailState extends State<WebtoonDetail> {
+  Future<void> updateWithDetail() async {
+    widget.counts = await widget.updateWebtoon();
+    setState(() {});
+  }
+
+  Future<void> updateLikedWithDetail() async {
+    if (widget.userIdentifier != 'guest') {
+      widget.isLiked = !widget.isLiked;
+      await widget.updateLikedWebtoon(widget.isLiked);
+    } else {
+      await alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
+    }
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +67,7 @@ class WebtoonDetail extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(
-              thumb,
+              widget.thumb,
               headers: const {
                 "User-Agent":
                     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
@@ -48,13 +83,13 @@ class WebtoonDetail extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Hero(
-                tag: webtoonId,
+                tag: widget.webtoonId,
                 child: SizedBox(
                   height: 350 * scaleHeightExceptMeunbar(context),
                   child: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Image.network(
-                      thumb,
+                      widget.thumb,
                       headers: const {
                         "User-Agent":
                             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
@@ -79,9 +114,14 @@ class WebtoonDetail extends StatelessWidget {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Icons.thumb_up_off_alt),
+                                  GestureDetector(
+                                    child: Icon(widget.isLiked
+                                        ? Icons.thumb_up_alt
+                                        : Icons.thumb_up_off_alt),
+                                    onTap: () => updateLikedWithDetail(),
+                                  ),
                                   Text(
-                                    '+ $likeCount',
+                                    '+ ${widget.counts.likecount > 999 ? 999 : widget.counts.likecount}',
                                     style: const TextStyle(
                                       color: Colors.red,
                                       decoration: TextDecoration.underline,
@@ -102,11 +142,27 @@ class WebtoonDetail extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
-                                children: const [
-                                  Icon(Icons.message),
+                                children: [
+                                  GestureDetector(
+                                    child: const Icon(Icons.message),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(builder: (context) {
+                                          return CommentScreen(
+                                            refreshWithDetail: updateWithDetail,
+                                            enableCommentField:
+                                                widget.enableCommentField,
+                                            webtoonId: widget.webtoonId,
+                                            counts: widget.counts,
+                                          );
+                                        }),
+                                      );
+                                    },
+                                  ),
                                   Text(
-                                    '+ 999',
-                                    style: TextStyle(
+                                    '+ ${widget.counts.commentcount > 999 ? 999 : widget.counts.commentcount}',
+                                    style: const TextStyle(
                                       color: Colors.red,
                                       decoration: TextDecoration.underline,
                                       fontWeight: FontWeight.w600,
@@ -131,9 +187,9 @@ class WebtoonDetail extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                identifier.toUpperCase(),
+                                widget.identifier.toUpperCase(),
                                 style: TextStyle(
-                                    color: identifierColor,
+                                    color: widget.identifierColor,
                                     fontSize: 20,
                                     fontWeight: FontWeight.w900),
                                 textAlign: TextAlign.center,
@@ -150,7 +206,7 @@ class WebtoonDetail extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              for (var genre in genres)
+                              for (var genre in widget.genres)
                                 Genre(
                                   genreTitle: genre,
                                 ),
@@ -162,9 +218,15 @@ class WebtoonDetail extends StatelessWidget {
                   ),
                 ),
               ),
-              WebtoonPageFrame(
-                webtoonId: webtoonId,
-              ),
+              widget.identifier == 'lezhin'
+                  ? WebtoonPageFrameLezhin(
+                      webtoonId: widget.webtoonId,
+                      buttonColor: const Color(0xFFE21221),
+                      title: widget.title,
+                    )
+                  : WebtoonPageFrame(
+                      webtoonId: widget.webtoonId,
+                    ),
             ],
           ),
         ),
@@ -173,7 +235,9 @@ class WebtoonDetail extends StatelessWidget {
         preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: true,
-          titleText: title,
+          titleText: widget.title,
+          refreshCallback: updateWithDetail,
+          showRefreshButtion: true,
         ),
       ),
     );
