@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
           if (widget.identifier != 'guest') {
             await onBackPressedByHome(context);
           }
-          return true;
+          return false;
         },
       ),
       appBar: PreferredSize(

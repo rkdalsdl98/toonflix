@@ -42,31 +42,35 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> initData() async {
-    showingPage = DefaultPage(
-      onChangePage: onChangePage,
-    );
-    final isLogined = await UserService.getLogined();
+    try {
+      showingPage = DefaultPage(
+        onChangePage: onChangePage,
+      );
+      final isLogined = await UserService.getLogined();
 
-    if (isLogined == null) {
-      await UserService.setLogined(false);
-    } else if (isLogined) {
-      final now = DateTime.now();
-      final day = now.day;
+      if (isLogined == null) {
+        await UserService.setLogined(false);
+      } else if (isLogined) {
+        final now = DateTime.now();
+        final day = now.day;
 
-      final lastLoginedday = await UserService.getStorageIntData('day');
+        final lastLoginedDay = await UserService.getStorageIntData('day');
 
-      if (lastLoginedday != day) {
-        await UserService.resetYesterDayData(day);
+        if (lastLoginedDay != day) {
+          await UserService.resetYesterDayData(day);
+        }
+
+        if (context.mounted) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const HomeScreen(identifier: 'login'),
+            ),
+          );
+        }
       }
-
-      if (context.mounted) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(identifier: 'login'),
-          ),
-        );
-      }
+    } catch (e) {
+      print(e);
     }
   }
 

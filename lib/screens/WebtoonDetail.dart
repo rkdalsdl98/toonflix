@@ -3,6 +3,7 @@ import 'package:toonflix/globalfuncs/Desigh.dart';
 import 'package:toonflix/screens/CommentScreen.dart';
 import 'package:toonflix/service/models/CountsModel.dart';
 import 'package:toonflix/widgets/webtoon/Genre.dart';
+import 'package:toonflix/widgets/webtoon/WebtoonPageFrameLezhin.dart';
 
 import '../globalfuncs/System.dart';
 import '../widgets/global/GlobalAppBar.dart';
@@ -217,9 +218,15 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
                   ),
                 ),
               ),
-              WebtoonPageFrame(
-                webtoonId: widget.webtoonId,
-              ),
+              widget.identifier == 'lezhin'
+                  ? WebtoonPageFrameLezhin(
+                      webtoonId: widget.webtoonId,
+                      buttonColor: const Color(0xFFE21221),
+                      title: widget.title,
+                    )
+                  : WebtoonPageFrame(
+                      webtoonId: widget.webtoonId,
+                    ),
             ],
           ),
         ),

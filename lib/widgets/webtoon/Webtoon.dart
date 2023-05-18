@@ -40,7 +40,9 @@ class _WebtoonState extends State<Webtoon> {
       enableCommentField = true;
     }
 
-    genres = widget.webtoon.genre.split(',');
+    genres = widget.webtoon.company == 'lezhin'
+        ? widget.webtoon.genre.split('.')
+        : widget.webtoon.genre.split(',');
     counts = CountsModel.fromJson({
       'likecount': widget.webtoon.likecount,
       'commentcount': widget.webtoon.commentcount
@@ -79,6 +81,7 @@ class _WebtoonState extends State<Webtoon> {
   @override
   Widget build(BuildContext context) {
     onViewDetail() {
+      print(widget.webtoon.webtoonid);
       return Navigator.push(context, MaterialPageRoute(
         builder: (context) {
           return WebtoonDetail(
@@ -123,7 +126,7 @@ class _WebtoonState extends State<Webtoon> {
               ),
               AutoSizeText(
                 widget.webtoon.company.toUpperCase(),
-                minFontSize: 10,
+                minFontSize: 8,
                 maxFontSize: 12,
                 maxLines: 1,
                 style: TextStyle(
@@ -133,7 +136,9 @@ class _WebtoonState extends State<Webtoon> {
                 ),
               ),
               AutoSizeText(
-                widget.webtoon.title,
+                widget.webtoon.title.length > 12
+                    ? widget.webtoon.title.substring(0, 12).padRight(15, '.')
+                    : widget.webtoon.title,
                 maxLines: 2,
                 minFontSize: 7,
                 maxFontSize: 10,

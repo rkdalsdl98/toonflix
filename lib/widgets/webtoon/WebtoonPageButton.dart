@@ -61,16 +61,17 @@ class WebtoonPageButton extends StatelessWidget {
                       color: Colors.black.withOpacity(.3))
                 ]),
             child: Center(
-                child: AutoSizeText(
-              isDirectionLeft ? episode.title : '처음부터 정주행 하기',
-              minFontSize: 8,
-              maxFontSize: 12,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
+              child: AutoSizeText(
+                isDirectionLeft ? episode.title : '처음부터 정주행 하기',
+                minFontSize: 8,
+                maxFontSize: 12,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-            )),
+            ),
           ),
         ],
       ),
