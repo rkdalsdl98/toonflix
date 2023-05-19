@@ -5,7 +5,6 @@ import '../globalfuncs/Desigh.dart';
 import '../widgets/global/GlobalAppBar.dart';
 import '../widgets/global/GlobalDrawer.dart';
 import '../widgets/global/GlobalMenuBar.dart';
-import '../widgets/home/Category.dart';
 import '../widgets/webtoon/BestWebtoon.dart';
 import '../widgets/webtoon/WebtoonList.dart';
 
@@ -23,11 +22,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: WillPopScope(
@@ -35,9 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               const BestWebtoon(),
-              const Category(),
               SizedBox(
-                height: 520 * scaleHeight(context),
+                height: 600 * scaleHeight(context),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: WebtoonList(

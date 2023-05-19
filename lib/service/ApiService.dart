@@ -10,9 +10,9 @@ import 'models/EpisodeModel.dart';
 import 'models/WebtoonModel.dart';
 
 class ApiService {
-  static Future<List<List<WebtoonModel>>> getTodaysToons() async {
+  static Future<List<List<WebtoonModel>>> getTodaysToons(String company) async {
     final baseurl = dotenv.env['BASEURL'];
-    final url = Uri.parse('$baseurl/list');
+    final url = Uri.parse('$baseurl/list/$company');
     final res = await http.get(url);
     List<List<WebtoonModel>> webtoons = [];
 
