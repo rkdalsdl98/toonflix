@@ -9,12 +9,6 @@ import '../../screens/WebtoonDetail.dart';
 import '../../service/ApiService.dart';
 import '../../service/UserService.dart';
 
-final Map<String, Color> identifierColor = {
-  'naver': const Color(0xFF00FF00),
-  'kakao': Colors.yellow,
-  'lezhin': Colors.red,
-};
-
 class Webtoon extends StatefulWidget {
   final WebtoonModel webtoon;
   final String identifier;

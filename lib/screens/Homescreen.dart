@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/System.dart';
+import 'package:toonflix/service/ApiService.dart';
+import 'package:toonflix/service/models/WebtoonModel.dart';
 
 import '../globalfuncs/Desigh.dart';
 import '../widgets/global/GlobalAppBar.dart';
@@ -21,6 +23,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Future<WebtoonModel> bestWebtoon;
+
+  void refreshBestWebtoon() {
+    setState(() {
+      bestWebtoon = ApiService.getBestWebtoon();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    bestWebtoon = ApiService.getBestWebtoon();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +44,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const BestWebtoon(),
+              FutureBuilder(
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return BestWebtoon(
+                      webtoon: snapshot.data!,
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                },
+                future: bestWebtoon,
+              ),
               SizedBox(
                 height: 600 * scaleHeight(context),
                 child: Padding(
@@ -52,7 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: false,
-          showRefreshButtion: false,
+          showRefreshButtion: true,
+          refreshCallback: refreshBestWebtoon,
         ),
       ),
       drawer: Drawer(

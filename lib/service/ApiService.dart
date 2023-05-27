@@ -39,6 +39,20 @@ class ApiService {
     throw Error();
   }
 
+  static Future<WebtoonModel> getBestWebtoon() async {
+    final baseurl = dotenv.env['BASEURL'];
+    final url = Uri.parse('$baseurl/best');
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      final json = jsonDecode(res.body);
+      WebtoonModel best = WebtoonModel.fromJson(json);
+      return best;
+    }
+
+    throw Error();
+  }
+
   static Future<EpisodeModel> getEpisodeById(String webtoonId) async {
     final baseurl = dotenv.env['BASEURL'];
     final url = Uri.parse('$baseurl/$webtoonId/episode');

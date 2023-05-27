@@ -18,10 +18,10 @@ class DefaultPage extends StatelessWidget {
       children: [
         SizedBox(
           height: scaleHeightByDevice(context, 1 / 6),
-          child: Column(
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children: [
               Text(
                 '오늘은 뭘볼까?',
                 style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),

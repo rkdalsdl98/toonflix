@@ -5,6 +5,12 @@ import 'System.dart';
 const standardDeviceWidth = 480;
 const standardDeviceHeight = 600;
 
+final Map<String, Color> identifierColor = {
+  'naver': const Color(0xFF00FF00),
+  'kakao': Colors.yellow,
+  'lezhin': Colors.red,
+};
+
 double scaleWidth(BuildContext context) {
   final diff = MediaQuery.of(context).size.width / standardDeviceWidth;
   return diff;
