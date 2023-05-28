@@ -22,23 +22,24 @@ class WebtoonDetail extends StatefulWidget {
   final String title;
   final String webtoonId;
   final String userIdentifier;
+  bool isBestWebtoon;
   bool isLiked;
 
-  WebtoonDetail({
-    super.key,
-    required this.identifier,
-    required this.genres,
-    required this.thumb,
-    required this.title,
-    required this.identifierColor,
-    required this.webtoonId,
-    required this.counts,
-    required this.updateWebtoon,
-    required this.isLiked,
-    required this.updateLikedWebtoon,
-    required this.userIdentifier,
-    required this.enableCommentField,
-  });
+  WebtoonDetail(
+      {super.key,
+      required this.identifier,
+      required this.genres,
+      required this.thumb,
+      required this.title,
+      required this.identifierColor,
+      required this.webtoonId,
+      required this.counts,
+      required this.updateWebtoon,
+      required this.isLiked,
+      required this.updateLikedWebtoon,
+      required this.userIdentifier,
+      required this.enableCommentField,
+      this.isBestWebtoon = false});
 
   @override
   State<WebtoonDetail> createState() => _WebtoonDetailState();
@@ -83,7 +84,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Hero(
-                tag: widget.webtoonId,
+                tag: widget.isBestWebtoon ? 'best' : widget.webtoonId,
                 child: SizedBox(
                   height: 350 * scaleHeightExceptMeunbar(context),
                   child: Padding(

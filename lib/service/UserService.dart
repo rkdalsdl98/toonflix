@@ -161,6 +161,7 @@ class UserService {
     final SharedPreferences storage = await SharedPreferences.getInstance();
 
     final List<String>? likes = storage.getStringList('liked');
+
     if (isSubtract) {
       likes!.remove(title);
     } else {

@@ -49,6 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   if (snapshot.hasData) {
                     return BestWebtoon(
                       webtoon: snapshot.data!,
+                      identifier: widget.identifier,
                     );
                   }
                   return const CircularProgressIndicator();

@@ -12,8 +12,14 @@ import '../../service/UserService.dart';
 class Webtoon extends StatefulWidget {
   final WebtoonModel webtoon;
   final String identifier;
+  bool isBestWebtoon;
 
-  const Webtoon({super.key, required this.webtoon, required this.identifier});
+  Webtoon({
+    super.key,
+    required this.webtoon,
+    required this.identifier,
+    this.isBestWebtoon = false,
+  });
 
   @override
   State<Webtoon> createState() => _WebtoonState();
@@ -90,6 +96,7 @@ class _WebtoonState extends State<Webtoon> {
             webtoonId: widget.webtoon.webtoonid,
             isLiked: isLiked,
             enableCommentField: enableCommentField,
+            isBestWebtoon: widget.isBestWebtoon,
           );
         },
       ));
@@ -108,7 +115,7 @@ class _WebtoonState extends State<Webtoon> {
           child: Column(
             children: [
               Hero(
-                tag: widget.webtoon.webtoonid,
+                tag: widget.isBestWebtoon ? 'best' : widget.webtoon.webtoonid,
                 child: Image.network(
                   widget.webtoon.thumb,
                   headers: const {
@@ -117,29 +124,31 @@ class _WebtoonState extends State<Webtoon> {
                   },
                 ),
               ),
-              AutoSizeText(
-                widget.webtoon.company.toUpperCase(),
-                minFontSize: 8,
-                maxFontSize: 12,
-                maxLines: 1,
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                  color: identifierColor[widget.webtoon.company],
+              if (!widget.isBestWebtoon)
+                AutoSizeText(
+                  widget.webtoon.company.toUpperCase(),
+                  minFontSize: 8,
+                  maxFontSize: 12,
+                  maxLines: 1,
+                  style: TextStyle(
+                    fontSize: 10,
+                    fontWeight: FontWeight.w600,
+                    color: identifierColor[widget.webtoon.company],
+                  ),
                 ),
-              ),
-              AutoSizeText(
-                widget.webtoon.title.length > 12
-                    ? widget.webtoon.title.substring(0, 12).padRight(15, '.')
-                    : widget.webtoon.title,
-                maxLines: 2,
-                minFontSize: 7,
-                maxFontSize: 10,
-                style: const TextStyle(
-                  fontSize: 7,
-                  fontWeight: FontWeight.w600,
+              if (!widget.isBestWebtoon)
+                AutoSizeText(
+                  widget.webtoon.title.length > 12
+                      ? widget.webtoon.title.substring(0, 12).padRight(15, '.')
+                      : widget.webtoon.title,
+                  maxLines: 2,
+                  minFontSize: 7,
+                  maxFontSize: 10,
+                  style: const TextStyle(
+                    fontSize: 7,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
             ],
           ),
         ),
