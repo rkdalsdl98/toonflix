@@ -8,12 +8,14 @@ class WebtoonPageFrameLezhin extends StatefulWidget {
   final String webtoonId;
   final String title;
   final Color buttonColor;
+  final bool hiddenText;
 
   const WebtoonPageFrameLezhin({
     super.key,
     required this.webtoonId,
     required this.buttonColor,
     required this.title,
+    this.hiddenText = false,
   });
 
   @override
@@ -34,22 +36,26 @@ class _WebtoonPageFrameLezhinState extends State<WebtoonPageFrameLezhin> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: widget.hiddenText
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.center,
           children: [
-            AutoSizeText(
-              '레진 코믹스 웹툰은 플랫폼 특성상 프롤로그 페이지로만 이동하며,\n프롤로그가 없는 웹툰에 경우 해당 웹툰 페이지로 이동하게 됩니다.',
-              minFontSize: 8,
-              maxFontSize: 12,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                color: Colors.white.withOpacity(.6),
+            if (!widget.hiddenText)
+              AutoSizeText(
+                '레진 코믹스 웹툰은 플랫폼 특성상 프롤로그 페이지로만 이동하며,\n프롤로그가 없는 웹툰에 경우 해당 웹툰 페이지로 이동하게 됩니다.',
+                minFontSize: 8,
+                maxFontSize: 12,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white.withOpacity(.6),
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20 * scaleHeightExceptMeunbar(context),
-            ),
+            if (!widget.hiddenText)
+              SizedBox(
+                height: 20 * scaleHeightExceptMeunbar(context),
+              ),
             Container(
               width: 180 * scaleWidth(context),
               height: 50 * scaleHeightExceptMeunbar(context),

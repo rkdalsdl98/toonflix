@@ -84,7 +84,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       drawer: Drawer(
-        child: GlobalDrawer(),
+        child: GlobalDrawer(
+          identifier: widget.identifier,
+        ),
       ),
       drawerEnableOpenDragGesture: false,
       bottomNavigationBar: GlobalMenuBar(),

@@ -16,17 +16,11 @@ class GlobalMenuBar extends StatefulWidget {
 }
 
 class _GlobalMenuBarState extends State<GlobalMenuBar> {
-  double toonflixIconTranslateY = 0;
-
   onTapIcon(int idx, BuildContext context) {
     setState(() {
       widget.selectedIconIdx = idx;
       if (idx == 1) {
-        toonflixIconTranslateY = -10;
-      } else if (idx == 2) {
         Scaffold.of(context).openDrawer();
-      } else {
-        toonflixIconTranslateY = 0;
       }
     });
   }
@@ -49,38 +43,6 @@ class _GlobalMenuBarState extends State<GlobalMenuBar> {
               size: 30 * scaleHeight(context),
             ),
             label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: AnimatedContainer(
-              duration: const Duration(milliseconds: 150),
-              transform: Matrix4(
-                1, // scale X
-                0, // rotate Y
-                0,
-                0,
-                0, // rotate X
-                1, // scale Y
-                0,
-                0,
-                0,
-                0,
-                1,
-                0,
-                0, // translate X
-                toonflixIconTranslateY, // translate Y
-                0,
-                1,
-              ),
-              decoration: BoxDecoration(
-                color: const Color.fromARGB(255, 27, 26, 26).withOpacity(.6),
-                borderRadius: BorderRadius.circular(45),
-              ),
-              child: Image.asset(
-                'assets/icons/toonflixlogo_translucent.png',
-                height: 50 * scaleHeight(context),
-              ),
-            ),
-            label: '',
           ),
           BottomNavigationBarItem(
             icon: Icon(

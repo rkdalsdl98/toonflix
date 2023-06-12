@@ -4,6 +4,8 @@ import 'package:toonflix/globalfuncs/System.dart';
 class GlobalAppBar extends StatefulWidget {
   final bool centerTitle;
   final bool showRefreshButtion;
+  final bool translateBackground;
+
   dynamic refreshCallback;
   String? titleText;
   bool showDefaultLeading;
@@ -15,6 +17,7 @@ class GlobalAppBar extends StatefulWidget {
     required this.showRefreshButtion,
     this.refreshCallback,
     this.showDefaultLeading = false,
+    this.translateBackground = false,
   });
 
   @override
@@ -36,7 +39,9 @@ class _GlobalAppBarState extends State<GlobalAppBar> {
                 width: 48,
                 height: 48,
               ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: widget.translateBackground
+            ? Colors.transparent
+            : Theme.of(context).colorScheme.background,
         actions: [
           if (widget.showRefreshButtion)
             IconButton(

@@ -26,6 +26,7 @@ class _WebtoonColumState extends State<WebtoonColum> {
               Webtoon(
                 webtoon: webtoon,
                 identifier: widget.identifier,
+                borderIntensity: 45,
               )
           ],
         ),

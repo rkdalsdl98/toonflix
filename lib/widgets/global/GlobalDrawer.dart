@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:toonflix/screens/latest_webtoon_screen.dart';
 
+import '../../screens/NoticeScreen.dart';
 import '../sidebar/UserProfile.dart';
 import 'MenuButton.dart';
 
 class GlobalDrawer extends StatefulWidget {
+  final String identifier;
   bool showMenus;
 
   GlobalDrawer({
     super.key,
     this.showMenus = false,
+    required this.identifier,
   });
 
   @override
@@ -33,24 +37,31 @@ class _GlobalDrawerState extends State<GlobalDrawer> {
       children: [
         UserProfile(
           onPressDetail: setShowMenus,
+          identifier: widget.identifier,
         ),
         if (widget.showMenus)
           Column(
-            children: const [
-              MenuButton(
-                menuIcon: Icons.favorite,
-                menuTitle: '찜 목록',
-                iconColor: Colors.red,
-              ),
-              MenuButton(
-                menuIcon: Icons.message_rounded,
-                menuTitle: '내가 쓴 의견',
-                iconColor: Colors.white,
-              ),
+            children: [
               MenuButton(
                 menuIcon: Icons.campaign_rounded,
                 menuTitle: '공지사항',
                 iconColor: Colors.white,
+                callback: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NoticeScreen()),
+                ),
+              ),
+              MenuButton(
+                menuIcon: Icons.bookmark,
+                menuTitle: '최근 관심 가진 웹툰',
+                iconColor: Colors.red,
+                callback: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => LatestWebtoonScreen(
+                            identifier: widget.identifier,
+                          )),
+                ),
               ),
             ],
           )

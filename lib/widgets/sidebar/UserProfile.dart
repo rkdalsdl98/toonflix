@@ -1,66 +1,59 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:toonflix/service/controllers/user_controller.dart';
+import 'package:toonflix/widgets/webtoon/Webtoon.dart';
 
 class UserProfile extends StatelessWidget {
   final void Function() onPressDetail;
+  final UserController userController = Get.find<UserController>();
+  final String identifier;
 
-  const UserProfile({
+  UserProfile({
     super.key,
     required this.onPressDetail,
+    required this.identifier,
   });
 
   @override
   Widget build(BuildContext context) {
-    return UserAccountsDrawerHeader(
-      accountName: const AutoSizeText(
-        'roses_are_rosie',
-        style: TextStyle(fontSize: 18, color: Color(0xFFCA7979)),
-      ),
-      accountEmail: const AutoSizeText(
-        'roses_are_rosie@gmail.com',
-        style: TextStyle(
-          fontSize: 12,
+    return GetBuilder<UserController>(builder: (controller) {
+      final likeWebtoons = controller.likeWebtoons;
+      final latestWebtoons = likeWebtoons.getRange(
+          likeWebtoons.length > 3 ? likeWebtoons.length - 3 : 0,
+          likeWebtoons.length);
+
+      return UserAccountsDrawerHeader(
+        accountName: const AutoSizeText(
+          'yeh.shaa_',
+          style: TextStyle(fontSize: 18, color: Color(0xFFCA7979)),
         ),
-      ),
-      currentAccountPicture: const CircleAvatar(
-        backgroundImage: AssetImage('assets/icons/로제.png'),
-      ),
-      decoration: const BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(20),
-        ),
-      ),
-      onDetailsPressed: onPressDetail,
-      otherAccountsPictures: [
-        GestureDetector(
-          child: Image.network(
-            'https://image-comic.pstatic.net/webtoon/776255/thumbnail/thumbnail_IMAG21_4121980471072928565.jpg',
-            headers: const {
-              "User-Agent":
-                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-            },
+        accountEmail: const AutoSizeText(
+          'yeh.shaa_@gmail.com',
+          style: TextStyle(
+            fontSize: 12,
           ),
         ),
-        GestureDetector(
-          child: Image.network(
-            'https://image-comic.pstatic.net/webtoon/131385/thumbnail/thumbnail_IMAG21_1d44dd99-4fef-48b5-81f0-083e83b6c048.jpg',
-            headers: const {
-              "User-Agent":
-                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-            },
+        currentAccountPicture: const CircleAvatar(
+          backgroundImage: AssetImage('assets/icons/물만두.png'),
+        ),
+        decoration: const BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(20),
           ),
         ),
-        GestureDetector(
-          child: Image.network(
-            'https://image-comic.pstatic.net/webtoon/746857/thumbnail/thumbnail_IMAG21_fb7d7fcd-19f1-49eb-9cc8-aae9622cdd04.jpg',
-            headers: const {
-              "User-Agent":
-                  "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36",
-            },
-          ),
-        ),
-      ],
-    );
+        onDetailsPressed: onPressDetail,
+        otherAccountsPictures: [
+          for (var webtoon in latestWebtoons)
+            Webtoon(
+              webtoon: webtoon,
+              identifier: identifier,
+              isBestWebtoon: true,
+              otherIdentifierCode: 1,
+            )
+        ],
+      );
+    });
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:toonflix/globalfuncs/Desigh.dart';
 import 'package:toonflix/service/ApiService.dart';
+import 'package:toonflix/service/controllers/user_controller.dart';
 import 'package:toonflix/service/models/WebtoonModel.dart';
 import 'package:toonflix/widgets/home/Category.dart';
 
@@ -43,6 +45,7 @@ class _WebtoonListState extends State<WebtoonList> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final List<List<WebtoonModel>> webtoonList = snapshot.data!;
+                Get.find<UserController>().initializeLikeWebtoons(webtoonList);
                 return ListView.separated(
                   itemCount: webtoonList.length,
                   itemBuilder: (context, idx) {
