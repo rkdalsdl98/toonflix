@@ -98,7 +98,8 @@ class _LatestWebtoonScreenState extends State<LatestWebtoonScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 370 * scaleHeight(context),
+                    width: 400 * scaleWidth(context),
+                    height: 400 * scaleHeight(context),
                     child: GetBuilder<UserController>(builder: (controller) {
                       final data = controller.likeWebtoons;
                       if (data.isEmpty) {
