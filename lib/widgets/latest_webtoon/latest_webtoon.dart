@@ -24,27 +24,22 @@ class LatestWebtoon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double currScale = 0;
+    double currTrans = 0;
     if (pageValue.floor() == position) {
-      var currScale = 1 - (pageValue - position) * (1 - scaleFactor);
-      var currTrans = _height * (1 - currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, currTrans, 0);
+      currScale = 1 - (pageValue - position) * (1 - scaleFactor);
+      currTrans = _height * (1 - currScale) / 2;
     } else if (position == pageValue.floor() + 1) {
-      var currScale =
-          scaleFactor + (pageValue - position + 1) * (1 - scaleFactor);
-      var currTrans = _height * (1 - currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, currTrans, 0);
+      currScale = scaleFactor + (pageValue - position + 1) * (1 - scaleFactor);
+      currTrans = _height * (1 - currScale) / 2;
     } else if (position == pageValue.floor() - 1) {
-      var currScale = 1 - (pageValue - position) * (1 - scaleFactor);
-      var currTrans = _height * (1 - currScale) / 2;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, currTrans, 0);
+      currScale = 1 - (pageValue - position) * (1 - scaleFactor);
+      currTrans = _height * (1 - currScale) / 2;
     } else {
-      var currScale = .8;
-      matrix = Matrix4.diagonal3Values(1, currScale, 1)
-        ..setTranslationRaw(0, _height * (1 - scaleFactor) / 2, 0);
+      currScale = .8;
     }
+    matrix = Matrix4.diagonal3Values(1, currScale, 1)
+      ..setTranslationRaw(0, currTrans, 0);
 
     return Transform(
       transform: matrix,
