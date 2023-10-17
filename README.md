@@ -8,13 +8,8 @@
 
 웹툰을 앱에 로드하는 형식이 아닌, 웹툰을 제공하는 사이트로 이동하게 만들었습니다.  
 
-# Figma
-
-피그마 주소 -> https://www.figma.com/file/AcBSZDE8CXW79wlb31gw1u/ToonFlix?node-id=0-1&t=KP1fIXHmTEhpUES9-0
-
-# ERD
-
-<img src='https://velog.velcdn.com/images/rkdalsdl98/post/c984f8b1-5059-4006-ad56-1444131c1921/image.png'>
+# State Management  
++ GetX
 
 # Stack
 
@@ -30,5 +25,13 @@ BackEnd
 
 Database
 <img src='https://cdn.jumpit.co.kr/images/stacks/mysql.png' width="50" height="50">  
+
+# Figma
+
+피그마 주소 -> https://www.figma.com/file/AcBSZDE8CXW79wlb31gw1u/ToonFlix?node-id=0-1&t=KP1fIXHmTEhpUES9-0
+
+# Demo  
+
+<img src="https://github.com/rkdalsdl98/toonflix/assets/77562358/2d5a3faf-325b-45d7-8b3d-3f0c1145ccb4">
 
 [서버 레포지토리로 이동하기](https://github.com/rkdalsdl98/toonflix-server)
