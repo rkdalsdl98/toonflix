@@ -4,10 +4,16 @@
 
 ### ** 웹툰을 불법복제 하지 않고 해당 웹툰 플랫폼으로 이동하는 방식입니다. **  
 
-# Stack  
-
-FrontEnd
-<img src='https://cdn.jumpit.co.kr/images/stacks/flutter.png' width="50" height="50"> <img src='https://cdn.jumpit.co.kr/images/stacks/dart.png' width="50" height="50">  
+<h2>📚 STACKS</h2>
+<div>
+  <img src="https://img.shields.io/badge/dart-0175C2?style=for-the-badge&logo=dart&logoColor=white"> <img src="https://img.shields.io/badge/flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white">
+</div>  
+<div>  
+    <img src="https://img.shields.io/badge/SharedPreferences-41AD48?style=flat-square">
+</div>  
+<div>  
+  <img src="https://img.shields.io/badge/GetX-5387C6?style=flat-square"> 
+</div>   
 
 # Features  
 
