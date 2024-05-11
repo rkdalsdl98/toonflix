@@ -15,6 +15,10 @@
 
 ### ** 웹툰을 불법복제 하지 않고 해당 웹툰 플랫폼으로 이동하는 방식입니다. **  
 
+## Architecture & State Management  
++ MVVM  
++ GetX  
+
 ## Features  
 
 - 네이버, 레진 등 다양한 플랫폼 웹툰의 정보를 볼 수 있다.  
