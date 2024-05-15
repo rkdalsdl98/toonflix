@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:toonflix/globalfuncs/System.dart';
+import 'package:toonflix/service/ApiService.dart';
+import 'package:toonflix/service/models/WebtoonModel.dart';
 
 import '../globalfuncs/Desigh.dart';
 import '../widgets/global/GlobalAppBar.dart';
 import '../widgets/global/GlobalDrawer.dart';
 import '../widgets/global/GlobalMenuBar.dart';
-import '../widgets/home/Category.dart';
 import '../widgets/webtoon/BestWebtoon.dart';
 import '../widgets/webtoon/WebtoonList.dart';
 
@@ -22,9 +23,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late Future<WebtoonModel> bestWebtoon;
+
+  void refreshBestWebtoon() {
+    setState(() {
+      bestWebtoon = ApiService.getBestWebtoon();
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    bestWebtoon = ApiService.getBestWebtoon();
   }
 
   @override
@@ -34,10 +44,20 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const BestWebtoon(),
-              const Category(),
+              FutureBuilder(
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return BestWebtoon(
+                      webtoon: snapshot.data!,
+                      identifier: widget.identifier,
+                    );
+                  }
+                  return const CircularProgressIndicator();
+                },
+                future: bestWebtoon,
+              ),
               SizedBox(
-                height: 520 * scaleHeight(context),
+                height: 600 * scaleHeight(context),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: WebtoonList(
@@ -59,11 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
         preferredSize: const Size.fromHeight(64),
         child: GlobalAppBar(
           centerTitle: false,
-          showRefreshButtion: false,
+          showRefreshButtion: true,
+          refreshCallback: refreshBestWebtoon,
         ),
       ),
       drawer: Drawer(
-        child: GlobalDrawer(),
+        child: GlobalDrawer(
+          identifier: widget.identifier,
+        ),
       ),
       drawerEnableOpenDragGesture: false,
       bottomNavigationBar: GlobalMenuBar(),

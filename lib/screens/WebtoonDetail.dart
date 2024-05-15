@@ -22,6 +22,8 @@ class WebtoonDetail extends StatefulWidget {
   final String title;
   final String webtoonId;
   final String userIdentifier;
+  int otherIdentifierCode;
+  bool isBestWebtoon;
   bool isLiked;
 
   WebtoonDetail({
@@ -38,6 +40,8 @@ class WebtoonDetail extends StatefulWidget {
     required this.updateLikedWebtoon,
     required this.userIdentifier,
     required this.enableCommentField,
+    this.isBestWebtoon = false,
+    this.otherIdentifierCode = 0,
   });
 
   @override
@@ -54,6 +58,7 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
     if (widget.userIdentifier != 'guest') {
       widget.isLiked = !widget.isLiked;
       await widget.updateLikedWebtoon(widget.isLiked);
+      await updateWithDetail();
     } else {
       await alertMessage('추천 기능은 로그인 이후에 사용이 가능합니다.', context, false);
     }
@@ -83,7 +88,9 @@ class _WebtoonDetailState extends State<WebtoonDetail> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Hero(
-                tag: widget.webtoonId,
+                tag: widget.isBestWebtoon
+                    ? 'best${widget.webtoonId}${widget.otherIdentifierCode}'
+                    : widget.webtoonId,
                 child: SizedBox(
                   height: 350 * scaleHeightExceptMeunbar(context),
                   child: Padding(

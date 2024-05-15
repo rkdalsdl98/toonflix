@@ -3,8 +3,11 @@ import '../../globalfuncs/Desigh.dart';
 import 'IdentifierButton.dart';
 
 class Category extends StatelessWidget {
+  final Function(String) callChangeCategory;
+
   const Category({
     super.key,
+    required this.callChangeCategory,
   });
 
   @override
@@ -17,18 +20,22 @@ class Category extends StatelessWidget {
       height: 80 * scaleHeight(context),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: const [
+        children: [
           IdentifierButton(
             identifier: 'naver',
+            callChangeCategory: callChangeCategory,
           ),
           IdentifierButton(
             identifier: 'kakao',
+            callChangeCategory: callChangeCategory,
           ),
           IdentifierButton(
             identifier: 'lezhin',
+            callChangeCategory: callChangeCategory,
           ),
           IdentifierButton(
             identifier: 'all',
+            callChangeCategory: callChangeCategory,
           ),
         ],
       ),

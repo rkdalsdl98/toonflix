@@ -19,7 +19,18 @@ class CommentList extends StatelessWidget {
     return ListView.separated(
       itemCount: comments.isEmpty ? 1 : comments.length,
       itemBuilder: (context, idx) {
-        if (comments.isEmpty) return const Text('쏘링 코멘트가 없떵...');
+        if (comments.isEmpty) {
+          return Center(
+            child: Text(
+              '첫 의견을 남기는 주인공이 되어보세요!',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white.withOpacity(.35),
+              ),
+            ),
+          );
+        }
         return CommentItem(
           commentData: comments[idx],
           enableActions: enableActions,

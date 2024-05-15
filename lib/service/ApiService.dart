@@ -10,9 +10,9 @@ import 'models/EpisodeModel.dart';
 import 'models/WebtoonModel.dart';
 
 class ApiService {
-  static Future<List<List<WebtoonModel>>> getTodaysToons() async {
+  static Future<List<List<WebtoonModel>>> getTodaysToons(String company) async {
     final baseurl = dotenv.env['BASEURL'];
-    final url = Uri.parse('$baseurl/list');
+    final url = Uri.parse('$baseurl/list/$company');
     final res = await http.get(url);
     List<List<WebtoonModel>> webtoons = [];
 
@@ -34,6 +34,20 @@ class ApiService {
 
       if (webtoonColum.isNotEmpty) webtoons.add(webtoonColum);
       return webtoons;
+    }
+
+    throw Error();
+  }
+
+  static Future<WebtoonModel> getBestWebtoon() async {
+    final baseurl = dotenv.env['BASEURL'];
+    final url = Uri.parse('$baseurl/best');
+    final res = await http.get(url);
+
+    if (res.statusCode == 200) {
+      final json = jsonDecode(res.body);
+      WebtoonModel best = WebtoonModel.fromJson(json);
+      return best;
     }
 
     throw Error();

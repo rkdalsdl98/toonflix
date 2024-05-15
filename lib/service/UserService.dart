@@ -19,7 +19,7 @@ class UserService {
       "day": "$day".padLeft(2, '0')
     });
 
-    if (res.statusCode == 201) {
+    if (res.statusCode == 201 && res.body.isNotEmpty) {
       final data = jsonDecode(res.body);
       final UserModel user = UserModel.fromJson(data);
 
@@ -29,9 +29,8 @@ class UserService {
       await saveUserData(user, weekly);
 
       return true;
-    } else {
-      return false;
     }
+    return false;
   }
 
   static Future<bool> checkDuplicatedId(String userId) async {
@@ -70,6 +69,11 @@ class UserService {
     } else {
       return true;
     }
+  }
+
+  static Future<List<String>?> getStorageStringListData(String key) async {
+    final SharedPreferences storage = await SharedPreferences.getInstance();
+    return storage.getStringList(key);
   }
 
   static Future<String?> getStorageStringData(String key) async {
@@ -161,6 +165,7 @@ class UserService {
     final SharedPreferences storage = await SharedPreferences.getInstance();
 
     final List<String>? likes = storage.getStringList('liked');
+
     if (isSubtract) {
       likes!.remove(title);
     } else {
